@@ -177,16 +177,27 @@ main section.whole-main-title1-area section.title1-area div.title10 {
   main section.whole-main-title1-area section.title1-area {
     width: 90%;
     flex-wrap: wrap;
-    height: 400px;
+    height: 800px;
   }
   main section.whole-main-title1-area section.title1-area div.title1,
   main section.whole-main-title1-area section.title1-area div.title2,
   main section.whole-main-title1-area section.title1-area div.title3,
-  main section.whole-main-title1-area section.title1-area div.title4 {
-    width: 25%;
+  main section.whole-main-title1-area section.title1-area div.title4,
+  main section.whole-main-title1-area section.title1-area div.title5,
+  main section.whole-main-title1-area section.title1-area div.title6,
+  main section.whole-main-title1-area section.title1-area div.title7,
+  main section.whole-main-title1-area section.title1-area div.title8 {
     flex: 0 1 calc((100% - 80px) / 4);
   }
-  main section.whole-main-title1-area section.title1-area div.title4 {
+  main section.whole-main-title1-area section.title1-area div.title4,
+  main section.whole-main-title1-area section.title1-area div.title8 {
     margin-right: 0;
+  }
+  main section.whole-main-title1-area section.title1-area div.title5 {
+    margin-right: 20px;
+  }
+  main section.whole-main-title1-area section.title1-area div.title9,
+  main section.whole-main-title1-area section.title1-area div.title10 {
+    flex: 0 1 calc((100% - 20px) / 2);
   }
 }/*# sourceMappingURL=style.css.map */
