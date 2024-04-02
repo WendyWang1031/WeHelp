@@ -164,7 +164,7 @@ main {
 }
 // }
 
-@media (min-width: 600px) and (max-width: 1200px) {
+@media (min-width: 601px) and (max-width: 1200px) {
   header.navbar-area {
     width: 100%;
   }
@@ -220,6 +220,26 @@ main {
         div.title9,
         div.title10 {
           flex: 0 1 calc((100% - (10px * 2)) / 2);
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 360px) and (max-width: 600px) {
+  section.whole-main-promotion-area {
+    section.promotion-area {
+      width: 90%;
+      div.promotion {
+        width: 100%;
+        margin-right: 20px;
+        flex-wrap: wrap;
+        div.promotion1,
+        div.promotion2,
+        div.promotion3 {
+          width: 100%;
+          margin-bottom: 20px;
+          margin-right: 20px;
         }
       }
     }
