@@ -38,6 +38,9 @@ header.navbar-area {
       display: inline-block;
       margin-right: 20px;
     }
+    div.mobile-menu {
+      display: none;
+    }
   }
 }
 main {
@@ -227,19 +230,71 @@ main {
 }
 
 @media (min-width: 360px) and (max-width: 600px) {
-  section.whole-main-promotion-area {
-    section.promotion-area {
-      width: 90%;
-      div.promotion {
-        width: 100%;
-        margin-right: 20px;
-        flex-wrap: wrap;
-        div.promotion1,
-        div.promotion2,
-        div.promotion3 {
+  header.navbar-area {
+    nav.navbar-nav {
+      ul {
+        display: none;
+      }
+      div.mobile-menu {
+        display: flex;
+        cursor: pointer;
+        align-items: center;
+      }
+    }
+    nav.navbar-nav.expanded {
+      display: block;
+      width: 50%;
+      position: absolute;
+      right: 0;
+      top: 100%;
+    }
+    nav.navbar-nav.expanded ul {
+      display: block;
+      padding: 0;
+      li {
+        display: block;
+      }
+    }
+  }
+  main {
+    section.whole-main-promotion-area {
+      section.promotion-area {
+        width: 90%;
+        div.promotion {
           width: 100%;
-          margin-bottom: 20px;
-          margin-right: 20px;
+
+          flex-wrap: wrap;
+          div.promotion1,
+          div.promotion2,
+          div.promotion3 {
+            width: 100%;
+            margin-bottom: 20px;
+            margin-right: 0;
+          }
+          div.promotion3 {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+    section.whole-main-title1-area {
+      section.title1-area {
+        width: 90%;
+        flex-wrap: wrap;
+        height: 1500px;
+
+        div.title1,
+        div.title2,
+        div.title3,
+        div.title4,
+        div.title5,
+        div.title6,
+        div.title7,
+        div.title8,
+        div.title9,
+        div.title10 {
+          flex: 0 1 calc(100%);
+          margin-right: 0;
         }
       }
     }

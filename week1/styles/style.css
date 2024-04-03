@@ -35,6 +35,9 @@ header.navbar-area nav.navbar-nav ul li {
   display: inline-block;
   margin-right: 20px;
 }
+header.navbar-area nav.navbar-nav div.mobile-menu {
+  display: none;
+}
 
 main section.Welcome-area {
   background-color: lightblue;
@@ -202,19 +205,61 @@ main section.whole-main-title1-area section.title1-area div.title10 {
   }
 }
 @media (min-width: 360px) and (max-width: 600px) {
-  section.whole-main-promotion-area section.promotion-area {
+  header.navbar-area nav.navbar-nav ul {
+    display: none;
+  }
+  header.navbar-area nav.navbar-nav div.mobile-menu {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+  }
+  header.navbar-area nav.navbar-nav.expanded {
+    display: block;
+    width: 50%;
+    position: absolute;
+    right: 0;
+    top: 100%;
+  }
+  header.navbar-area nav.navbar-nav.expanded ul {
+    display: block;
+    padding: 0;
+  }
+  header.navbar-area nav.navbar-nav.expanded ul li {
+    display: block;
+  }
+  main section.whole-main-promotion-area section.promotion-area {
     width: 90%;
   }
-  section.whole-main-promotion-area section.promotion-area div.promotion {
+  main section.whole-main-promotion-area section.promotion-area div.promotion {
     width: 100%;
-    margin-right: 20px;
     flex-wrap: wrap;
   }
-  section.whole-main-promotion-area section.promotion-area div.promotion div.promotion1,
-  section.whole-main-promotion-area section.promotion-area div.promotion div.promotion2,
-  section.whole-main-promotion-area section.promotion-area div.promotion div.promotion3 {
+  main section.whole-main-promotion-area section.promotion-area div.promotion div.promotion1,
+  main section.whole-main-promotion-area section.promotion-area div.promotion div.promotion2,
+  main section.whole-main-promotion-area section.promotion-area div.promotion div.promotion3 {
     width: 100%;
     margin-bottom: 20px;
-    margin-right: 20px;
+    margin-right: 0;
+  }
+  main section.whole-main-promotion-area section.promotion-area div.promotion div.promotion3 {
+    margin-bottom: 0;
+  }
+  main section.whole-main-title1-area section.title1-area {
+    width: 90%;
+    flex-wrap: wrap;
+    height: 1500px;
+  }
+  main section.whole-main-title1-area section.title1-area div.title1,
+  main section.whole-main-title1-area section.title1-area div.title2,
+  main section.whole-main-title1-area section.title1-area div.title3,
+  main section.whole-main-title1-area section.title1-area div.title4,
+  main section.whole-main-title1-area section.title1-area div.title5,
+  main section.whole-main-title1-area section.title1-area div.title6,
+  main section.whole-main-title1-area section.title1-area div.title7,
+  main section.whole-main-title1-area section.title1-area div.title8,
+  main section.whole-main-title1-area section.title1-area div.title9,
+  main section.whole-main-title1-area section.title1-area div.title10 {
+    flex: 0 1 100%;
+    margin-right: 0;
   }
 }/*# sourceMappingURL=style.css.map */
