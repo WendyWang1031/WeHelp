@@ -79,7 +79,7 @@ main {
           height: 50px;
           width: auto;
           flex-grow: 1;
-          background-color: rgb(251, 255, 215);
+          background-color: lightblue;
           align-items: center;
           display: flex;
           margin-right: 20px;
@@ -134,7 +134,7 @@ main {
         }
         span {
           width: 100%;
-          background-color: rgba($color: #c2fa51, $alpha: 0.5);
+          background-color: rgba($color: #e7fcbc, $alpha: 0.5);
           text-align: center;
           padding: 8px 0;
         }

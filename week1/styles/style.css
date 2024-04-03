@@ -72,7 +72,7 @@ main section.whole-main-promotion-area section.promotion-area div.promotion div 
   height: 50px;
   width: auto;
   flex-grow: 1;
-  background-color: rgb(251, 255, 215);
+  background-color: lightblue;
   align-items: center;
   display: flex;
   margin-right: 20px;
@@ -127,7 +127,7 @@ main section.whole-main-title1-area section.title1-area div img {
 }
 main section.whole-main-title1-area section.title1-area div span {
   width: 100%;
-  background-color: rgba(194, 250, 81, 0.5);
+  background-color: rgba(231, 252, 188, 0.5);
   text-align: center;
   padding: 8px 0;
 }
