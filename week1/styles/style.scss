@@ -32,6 +32,9 @@ header.navbar-area {
     font-weight: bold;
     margin-left: 20px;
   }
+  div.mobile-menu {
+    display: none;
+  }
   nav.navbar-nav {
     ul li {
       //   border: 2px solid rgba(43, 0, 255, 0.569);
@@ -39,9 +42,6 @@ header.navbar-area {
       margin-right: 20px;
     }
     div.close-btn {
-      display: none;
-    }
-    div.mobile-menu {
       display: none;
     }
   }
@@ -234,14 +234,17 @@ main {
 
 @media (min-width: 360px) and (max-width: 600px) {
   header.navbar-area {
+    div.mobile-menu {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      right: 10px;
+      cursor: pointer;
+    }
     nav.navbar-nav {
       ul {
         display: none;
-      }
-      div.mobile-menu {
-        display: flex;
-        cursor: pointer;
-        align-items: center;
       }
     }
     nav.navbar-nav.expanded {
@@ -264,7 +267,7 @@ main {
         z-index: 101;
       }
       div.mobile-menu {
-        display: none;
+        z-index: 5;
       }
       ul {
         display: block;
