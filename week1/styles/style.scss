@@ -213,7 +213,11 @@ main {
         div.title6,
         div.title7,
         div.title8 {
-          flex: 0 1 calc((100% - (20px * 4)) / 4);
+          flex: 0 1 calc((100% - (20px * 3)) / 4);
+        }
+
+        div.title5 {
+          margin-right: 0;
         }
         div.title4,
         div.title8 {

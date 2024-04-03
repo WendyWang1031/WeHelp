@@ -193,7 +193,10 @@ main section.whole-main-title1-area section.title1-area div.title10 {
   main section.whole-main-title1-area section.title1-area div.title6,
   main section.whole-main-title1-area section.title1-area div.title7,
   main section.whole-main-title1-area section.title1-area div.title8 {
-    flex: 0 1 calc((100% - 80px) / 4);
+    flex: 0 1 calc((100% - 60px) / 4);
+  }
+  main section.whole-main-title1-area section.title1-area div.title5 {
+    margin-right: 0;
   }
   main section.whole-main-title1-area section.title1-area div.title4,
   main section.whole-main-title1-area section.title1-area div.title8 {
