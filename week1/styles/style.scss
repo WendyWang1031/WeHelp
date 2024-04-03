@@ -177,6 +177,9 @@ main {
   main {
     section.Welcome-area {
       width: 100%;
+      div.welcome-title {
+        width: 80%;
+      }
     }
     section.whole-main-promotion-area {
       section.promotion-area {
@@ -203,7 +206,7 @@ main {
       section.title1-area {
         width: 90%;
         flex-wrap: wrap;
-        height: 800px;
+        height: 900px;
 
         div.title1,
         div.title2,
@@ -238,6 +241,7 @@ main {
 
 @media (min-width: 360px) and (max-width: 600px) {
   header.navbar-area {
+    width: 100%;
     div.mobile-menu {
       display: flex;
       align-items: center;
@@ -286,6 +290,12 @@ main {
     }
   }
   main {
+    section.Welcome-area {
+      width: 100%;
+      div.welcome-title {
+        width: 80%;
+      }
+    }
     section.whole-main-promotion-area {
       section.promotion-area {
         width: 90%;
@@ -325,6 +335,17 @@ main {
           flex: 0 1 calc(100%);
           margin-right: 0;
         }
+      }
+    }
+  }
+}
+
+@media (min-width: 360px) and (max-width: 500px) {
+  main {
+    section.Welcome-area {
+      width: 100%;
+      div.welcome-title {
+        font-size: 1.75rem;
       }
     }
   }

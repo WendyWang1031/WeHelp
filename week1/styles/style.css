@@ -161,6 +161,9 @@ main section.whole-main-title1-area section.title1-area div.title10 {
   main section.Welcome-area {
     width: 100%;
   }
+  main section.Welcome-area div.welcome-title {
+    width: 80%;
+  }
   main section.whole-main-promotion-area section.promotion-area {
     width: 90%;
   }
@@ -183,7 +186,7 @@ main section.whole-main-title1-area section.title1-area div.title10 {
   main section.whole-main-title1-area section.title1-area {
     width: 90%;
     flex-wrap: wrap;
-    height: 800px;
+    height: 900px;
   }
   main section.whole-main-title1-area section.title1-area div.title1,
   main section.whole-main-title1-area section.title1-area div.title2,
@@ -211,6 +214,9 @@ main section.whole-main-title1-area section.title1-area div.title10 {
   }
 }
 @media (min-width: 360px) and (max-width: 600px) {
+  header.navbar-area {
+    width: 100%;
+  }
   header.navbar-area div.mobile-menu {
     display: flex;
     align-items: center;
@@ -254,6 +260,12 @@ main section.whole-main-title1-area section.title1-area div.title10 {
     justify-content: center;
     margin: 30px;
   }
+  main section.Welcome-area {
+    width: 100%;
+  }
+  main section.Welcome-area div.welcome-title {
+    width: 80%;
+  }
   main section.whole-main-promotion-area section.promotion-area {
     width: 90%;
   }
@@ -288,5 +300,13 @@ main section.whole-main-title1-area section.title1-area div.title10 {
   main section.whole-main-title1-area section.title1-area div.title10 {
     flex: 0 1 100%;
     margin-right: 0;
+  }
+}
+@media (min-width: 360px) and (max-width: 500px) {
+  main section.Welcome-area {
+    width: 100%;
+  }
+  main section.Welcome-area div.welcome-title {
+    font-size: 1.75rem;
   }
 }/*# sourceMappingURL=style.css.map */
