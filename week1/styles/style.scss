@@ -38,6 +38,9 @@ header.navbar-area {
       display: inline-block;
       margin-right: 20px;
     }
+    div.close-btn {
+      display: none;
+    }
     div.mobile-menu {
       display: none;
     }
@@ -244,15 +247,34 @@ main {
     nav.navbar-nav.expanded {
       display: block;
       width: 50%;
-      position: absolute;
+      height: 100%;
+      position: fixed;
       right: 0;
-      top: 100%;
-    }
-    nav.navbar-nav.expanded ul {
-      display: block;
-      padding: 0;
-      li {
+      top: 0;
+      z-index: 100;
+      background-color: white;
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+      div.close-btn {
+        display: flex;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 30px;
+        cursor: pointer;
+        z-index: 101;
+      }
+      div.mobile-menu {
+        display: none;
+      }
+      ul {
         display: block;
+        padding: 0;
+
+        li {
+          display: flex;
+          justify-content: center;
+          margin: 30px;
+        }
       }
     }
   }

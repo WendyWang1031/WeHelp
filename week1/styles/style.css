@@ -35,6 +35,9 @@ header.navbar-area nav.navbar-nav ul li {
   display: inline-block;
   margin-right: 20px;
 }
+header.navbar-area nav.navbar-nav div.close-btn {
+  display: none;
+}
 header.navbar-area nav.navbar-nav div.mobile-menu {
   display: none;
 }
@@ -216,16 +219,34 @@ main section.whole-main-title1-area section.title1-area div.title10 {
   header.navbar-area nav.navbar-nav.expanded {
     display: block;
     width: 50%;
-    position: absolute;
+    height: 100%;
+    position: fixed;
     right: 0;
-    top: 100%;
+    top: 0;
+    z-index: 100;
+    background-color: white;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+  }
+  header.navbar-area nav.navbar-nav.expanded div.close-btn {
+    display: flex;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 101;
+  }
+  header.navbar-area nav.navbar-nav.expanded div.mobile-menu {
+    display: none;
   }
   header.navbar-area nav.navbar-nav.expanded ul {
     display: block;
     padding: 0;
   }
   header.navbar-area nav.navbar-nav.expanded ul li {
-    display: block;
+    display: flex;
+    justify-content: center;
+    margin: 30px;
   }
   main section.whole-main-promotion-area section.promotion-area {
     width: 90%;
