@@ -38,25 +38,28 @@ def find_and_print(messages, current_station):
                     name_and_station_newData[person].append(index)
         return name_and_station_newData
 
-    station_index_new_data = transform_current_station
-    friend_new_data = transform_message_data
+    user_station_index = transform_current_station(current_station,station_index_map)
+    friend_new_data = transform_message_data(messages,station_index_map)
     closest_friend = None
     min_distance = float("inf")
-    for friend in friend_new_data:
-        station_index = friend_new_data[friend]
-        distance = abs(station_index - station_index_new_data)
-        if station_index == 0 :
-            distance = abs(17 - station_index_new_data) + 1
-        elif station_index_new_data == 0 :
-            distance =  abs(station_index - 17 ) + 1
-        elif station_index == 0 and station_index_new_data == 0 :
-            distance = 0
-        else:
-            distance = abs(station_index - station_index_new_data)
+    for friend , friend_station_index in friend_new_data.items():
+        #遍歷朋友的station_index的“值”
+        for friend_index_value in friend_station_index:
+            distance = abs(friend_index_value - user_station_index)
+            
+            #比較朋友的索引位置
+            if friend_index_value == 0 :
+                distance = abs(17 - user_station_index) + 1
+            elif user_station_index == 0 :
+                distance =  abs(friend_index_value - 17 ) + 1
+            elif friend_index_value == 0 and user_station_index == 0 :
+                distance = 0
+            else:
+                distance = abs(friend_index_value - user_station_index)
 
-        if distance < min_distance :
-            min_distance = distance
-            closest_friend = friend
+            if distance < min_distance :
+                min_distance = distance
+                closest_friend = friend
     return closest_friend
 
 messages={
@@ -66,11 +69,11 @@ messages={
     "Copper":"I just saw a concert at Taipei Arena.", 
     "Vivian":"I'm at Xindian station waiting for you."
 }
-find_and_print(messages, "Wanlong") # print Mary 
-# find_and_print(messages, "Songshan") # print Copper 
-# find_and_print(messages, "Qizhang") # print Leslie 
-# find_and_print(messages, "Ximen") # print Bob 
-# find_and_print(messages, "Xindian City Hall") # print Vivian
+print(find_and_print(messages, "Wanlong")) # print Mary 
+print(find_and_print(messages, "Songshan")) # print Copper 
+print(find_and_print(messages, "Qizhang")) # print Leslie 
+print(find_and_print(messages, "Ximen")) # print Bob 
+print(find_and_print(messages, "Xindian City Hall")) # print Vivian
 # === Task 2 ===
 print("=== Task 2 ===")
 
