@@ -29,14 +29,14 @@ def find_and_print(messages, current_station):
                 return index
         return None
     def transform_message_data(messages,station_index_map):
-        name_and_station_newData = {}
+        name_and_station_newdata = {}
         for person , description in messages.items():
             for index , station_name in enumerate(station_index_map):
                 if station_name in description:
-                    if person not in name_and_station_newData:
-                        name_and_station_newData[person] =[]
-                    name_and_station_newData[person].append(index)
-        return name_and_station_newData
+                    if person not in name_and_station_newdata:
+                        name_and_station_newdata[person] =[]
+                    name_and_station_newdata[person].append(index)
+        return name_and_station_newdata
 
     user_station_index = transform_current_station(current_station,station_index_map)
     friend_new_data = transform_message_data(messages,station_index_map)
@@ -78,26 +78,26 @@ print(find_and_print(messages, "Xindian City Hall")) # print Vivian
 print("=== Task 2 ===")
 
 def book(consultants, hour, duration, criteria):
-    sortedConsultants = consultants.copy()
+    sorted_consultants = consultants.copy()
     
     if criteria == "rate" :
-        sortedConsultants = sorted(consultants,key=lambda x:x["rate"],reverse = True)
+        sorted_consultants = sorted(consultants,key=lambda x:x["rate"],reverse = True)
     elif criteria == "price" :
-        sortedConsultants = sorted(consultants,key=lambda x:x["price"])
+        sorted_consultants = sorted(consultants,key=lambda x:x["price"])
     
 
-    for consultant in sortedConsultants:
+    for consultant in sorted_consultants:
         consultant_name = consultant["name"]
-        matchedConsultant = dictionary_forConsultants[consultant_name]
+        matched_consultant = dictionary_forConsultants[consultant_name]
         is_available = True;
         
         for i in range(hour, hour + duration):
-            if not matchedConsultant["hour"][i]:
+            if not matched_consultant["hour"][i]:
                 is_available = False;
                 break
         if is_available : 
             for i in range(hour, hour + duration):
-                matchedConsultant["hour"][i] = False
+                matched_consultant["hour"][i] = False
             return consultant["name"]
     
     return "No service"
@@ -107,14 +107,14 @@ consultants = [
     {"name":"Bob", "rate":3, "price":1200}, 
     {"name":"Jenny", "rate":3.8, "price":800}
 ]
-consultantAvailability = [
+consultant_availability = [
     {
         "name":consultant["name"],
         "hour":{hour:True for hour in range(9,22)}
     }   for consultant in consultants
 ]
 dictionary_forConsultants = {}
-for i in consultantAvailability:
+for i in consultant_availability:
     dictionary_forConsultants[i["name"]] = {"hour" : i["hour"]}
 
 print(book(consultants, 15, 1, "price")) # Jenny 
@@ -129,25 +129,25 @@ print(book(consultants, 14, 3, "price")) # John
 # === Task 3 ===
 print("=== Task 3 ===")
 def func(*data):
-    compareArr = []
-    uniqueCount = 0
+    compare_list = []
+    unique_count = 0
     for x in data :
-        charTocompare = []
+        char_to_compare = []
         if len(x) == 2 or len(x) == 3 :
-            charTocompare = x[1]
+            char_to_compare = x[1]
         else :
-            charTocompare = x[2]
-        compareArr.append({"name" : x , "char": charTocompare })
+            char_to_compare = x[2]
+        compare_list.append({"name" : x , "char": char_to_compare })
 
-    for i in compareArr :
+    for i in compare_list :
         count = 0
-        for j in compareArr : 
+        for j in compare_list : 
             if i["char"] == j["char"] :
                 count += 1
         if count == 1 :
-            uniqueCount += 1 
+            unique_count += 1 
             return i["name"]
-    if uniqueCount == 0 :
+    if unique_count == 0 :
         return "沒有"
 
 
