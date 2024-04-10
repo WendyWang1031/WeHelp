@@ -49,21 +49,29 @@ function findAndPrint(messages, currentStation) {
   }
   // console.log(transformMessageData(messages, stationIndexMap));
 
-  let stationIndexNewData = transformCurrentStation(currentStation);
-  let friendsNewData = transformMessageData(messages, stationIndexMap);
+  let user_station_index_newData = transformCurrentStation(currentStation);
+  let friends_location_newData = transformMessageData(
+    messages,
+    stationIndexMap
+  );
   let closestFriend = null;
   let minDistance = Infinity;
-  for (let friend in friendsNewData) {
-    let stationIndex = friendsNewData[friend];
-    let distance = Math.abs(stationIndex - stationIndexNewData);
-    if (stationIndex === 0) {
-      distance = Math.abs(17 - stationIndexNewData) + 1;
-    } else if (stationIndexNewData === 0) {
-      distance = Math.abs(stationIndex - 17) + 1;
-    } else if (stationIndex === 0 && stationIndexNewData === 0) {
+  for (let friend in friends_location_newData) {
+    let friends_location_index = friends_location_newData[friend];
+    let distance = Math.abs(
+      friends_location_index - user_station_index_newData
+    );
+    if (friends_location_index === 0) {
+      distance = Math.abs(17 - user_station_index_newData) + 1;
+    } else if (user_station_index_newData === 0) {
+      distance = Math.abs(friends_location_index - 17) + 1;
+    } else if (
+      friends_location_index === 0 &&
+      user_station_index_newData === 0
+    ) {
       distance = 0;
     } else {
-      distance = Math.abs(stationIndex - stationIndexNewData);
+      distance = Math.abs(friends_location_index - user_station_index_newData);
     }
 
     if (distance < minDistance) {
@@ -106,7 +114,6 @@ function book(consultants, hour, duration, criteria) {
       (person) => person.name === consultant.name
     );*/
     let matchedConsultant = dictionary[consultant.name];
-    //console.log(matchedConsultant);
     let isAvailable = true;
 
     for (let i = hour; i < hour + duration; i++) {
@@ -169,13 +176,13 @@ function func(...data) {
   let uniqueCount = 0;
   //將資料放入陣列中
   for (let x = 0; x < data.length; x++) {
-    let charTocompare;
+    let char_to_compare;
     if (data[x].length === 2 || data[x].length === 3) {
-      charTocompare = data[x][1];
+      char_to_compare = data[x][1];
     } else {
-      charTocompare = data[x][2];
+      char_to_compare = data[x][2];
     }
-    compareArr.push({ name: data[x], char: charTocompare });
+    compareArr.push({ name: data[x], char: char_to_compare });
   }
 
   //陣列資料互相比較
