@@ -213,14 +213,11 @@ function getNumber(index) {
   }
   return arr[index];
 }
-getNumber(1); // print 4
-getNumber(5); // print 15
-getNumber(10); // print 25
-getNumber(30); // print 70
-console.log(getNumber(1));
-console.log(getNumber(5));
-console.log(getNumber(10));
-console.log(getNumber(30));
+
+console.log(getNumber(1)); // print 4
+console.log(getNumber(5)); // print 15
+console.log(getNumber(10)); // print 25
+console.log(getNumber(30)); // print 70
 
 // === Task 5 ===
 console.log("=== Task 5 ===");
