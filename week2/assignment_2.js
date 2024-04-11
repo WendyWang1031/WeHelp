@@ -32,7 +32,7 @@ function findAndPrint(messages, currentStation) {
     }
     return null;
   }
-
+  //將朋友訊息比對車站名字，並且轉換成索引
   function transformMessageData(messages, stationIndexMap) {
     let nameAndStationNewData = {};
     Object.entries(messages).forEach(([person, description]) => {
@@ -47,13 +47,13 @@ function findAndPrint(messages, currentStation) {
     });
     return nameAndStationNewData;
   }
-  // console.log(transformMessageData(messages, stationIndexMap));
 
   let user_station_index_newData = transformCurrentStation(currentStation);
   let friends_location_newData = transformMessageData(
     messages,
     stationIndexMap
   );
+  //比較朋友與用戶的位置
   let closestFriend = null;
   let minDistance = Infinity;
   for (let friend in friends_location_newData) {
@@ -110,9 +110,6 @@ function book(consultants, hour, duration, criteria) {
   }
 
   for (let consultant of sortedConsultants) {
-    /*let matchedConsultant = consultantAvailability.find(
-      (person) => person.name === consultant.name
-    );*/
     let matchedConsultant = dictionary[consultant.name];
     let isAvailable = true;
 
@@ -239,11 +236,12 @@ console.log(getNumber(30));
 // === Task 5 ===
 console.log("=== Task 5 ===");
 function find(spaces, stat, n) {
+  //車輛供應狀況轉換成布林
   let stat_turn_boolean = [];
   for (let i = 0; i < stat.length; i++) {
     stat_turn_boolean.push(stat[i] === 1);
   }
-
+  //車輛位與乘客數量做比較
   let spaces_turn_check_available = [];
   for (let i = 0; i < spaces.length; i++) {
     if (spaces[i] >= n) {
@@ -252,13 +250,14 @@ function find(spaces, stat, n) {
       spaces_turn_check_available.push("No service");
     }
   }
-
+  //車輛位與供應狀況做比較
   for (let i = 0; i < stat_turn_boolean.length; i++) {
     if (stat_turn_boolean[i] === false) {
       spaces_turn_check_available[i] = "No service";
     }
   }
 
+  //為乘客推薦適合的車輛位
   let min_seat = Infinity;
   let available_seat = "";
 
