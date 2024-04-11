@@ -235,3 +235,50 @@ console.log(getNumber(1));
 console.log(getNumber(5));
 console.log(getNumber(10));
 console.log(getNumber(30));
+
+// === Task 5 ===
+console.log("=== Task 5 ===");
+function find(spaces, stat, n) {
+  let stat_turn_boolean = [];
+  for (let i = 0; i < stat.length; i++) {
+    stat_turn_boolean.push(stat[i] === 1);
+  }
+
+  let spaces_turn_check_available = [];
+  for (let i = 0; i < spaces.length; i++) {
+    if (spaces[i] >= n) {
+      spaces_turn_check_available.push(spaces[i]);
+    } else {
+      spaces_turn_check_available.push("No service");
+    }
+  }
+
+  for (let i = 0; i < stat_turn_boolean.length; i++) {
+    if (stat_turn_boolean[i] === false) {
+      spaces_turn_check_available[i] = "No service";
+    }
+  }
+
+  let min_seat = Infinity;
+  let available_seat = "";
+
+  for (let i = 0; i < spaces_turn_check_available.length; i++) {
+    if (spaces_turn_check_available[i] === "No service") {
+      continue;
+    }
+
+    let seat = spaces_turn_check_available[i] - n;
+
+    if (seat <= min_seat) {
+      min_seat = seat;
+      available_seat = i;
+    }
+  }
+  if (available_seat === "") {
+    return -1;
+  }
+  return available_seat;
+}
+console.log(find([3, 1, 5, 4, 3, 2], [0, 1, 0, 1, 1, 1], 2)); // print 5
+console.log(find([1, 0, 5, 1, 3], [0, 1, 0, 1, 1], 4)); // print -1
+console.log(find([4, 6, 5, 8], [0, 1, 1, 1], 4)); // print 2
