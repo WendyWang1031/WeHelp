@@ -1,7 +1,7 @@
 // === Task 1 ===
 console.log("=== Task 1 ===");
 function findAndPrint(messages, currentStation) {
-  let stationIndexMap = [
+  let stationMapList = [
     "Xiaobitan",
     "Songshan",
     "Nanjing Sanmin",
@@ -25,7 +25,7 @@ function findAndPrint(messages, currentStation) {
   ];
   //用戶的地點轉換成索引數字
   function transformCurrentStation(currentStation) {
-    for (let [index, stationName] of stationIndexMap.entries()) {
+    for (let [index, stationName] of stationMapList.entries()) {
       if (stationName === currentStation) {
         return parseInt(index);
       }
@@ -33,14 +33,11 @@ function findAndPrint(messages, currentStation) {
     return null;
   }
   //將朋友訊息比對車站名字，並且轉換成索引
-  function transformMessageData(messages, stationIndexMap) {
+  function transformMessageData(messages, stationMapList) {
     let nameAndStationNewData = {};
     Object.entries(messages).forEach(([person, description]) => {
-      for (let [index, stationName] of stationIndexMap.entries()) {
+      for (let [index, stationName] of stationMapList.entries()) {
         if (description.includes(stationName)) {
-          if (!nameAndStationNewData[person]) {
-            nameAndStationNewData[person] = [];
-          }
           nameAndStationNewData[person] = parseInt(index);
         }
       }
@@ -49,18 +46,13 @@ function findAndPrint(messages, currentStation) {
   }
 
   let user_station_index_newData = transformCurrentStation(currentStation);
-  let friends_location_newData = transformMessageData(
-    messages,
-    stationIndexMap
-  );
+  let friends_location_newData = transformMessageData(messages, stationMapList);
   //比較朋友與用戶的位置
   let closestFriend = null;
   let minDistance = Infinity;
   for (let friend in friends_location_newData) {
     let friends_location_index = friends_location_newData[friend];
-    let distance = Math.abs(
-      friends_location_index - user_station_index_newData
-    );
+    let distance;
     if (friends_location_index === 0) {
       distance = Math.abs(17 - user_station_index_newData) + 1;
     } else if (user_station_index_newData === 0) {
@@ -99,14 +91,14 @@ console.log(findAndPrint(messages, "Xindian City Hall")); // print Vivian
 console.log("=== Task 2 ===");
 
 function book(consultants, hour, duration, criteria) {
-  let sortedConsultants = [...consultants];
+  let sortedConsultants;
 
   //優先度、排序
   if (criteria === "rate") {
-    sortedConsultants.sort((a, b) => b.rate - a.rate);
+    sortedConsultants = consultants.sort((a, b) => b.rate - a.rate);
   }
   if (criteria === "price") {
-    sortedConsultants.sort((a, b) => a.price - b.price);
+    sortedConsultants = consultants.sort((a, b) => a.price - b.price);
   }
 
   for (let consultant of sortedConsultants) {
@@ -199,14 +191,11 @@ function func(...data) {
     return "沒有";
   }
 }
-func("彭大牆", "陳王明雅", "吳明"); // print 彭大牆
-func("郭靜雅", "王立強", "郭林靜宜", "郭立恆", "林花花"); // print 林花花
-func("郭宣雅", "林靜宜", "郭宣恆", "林靜花"); // print 沒有
-func("郭宣雅", "夏曼藍波安", "郭宣恆"); // print 夏曼藍波安
-console.log(func("彭大牆", "陳王明雅", "吳明"));
-console.log(func("郭靜雅", "王立強", "郭林靜宜", "郭立恆", "林花花"));
-console.log(func("郭宣雅", "林靜宜", "郭宣恆", "林靜花"));
-console.log(func("郭宣雅", "夏曼藍波安", "郭宣恆"));
+
+console.log(func("彭大牆", "陳王明雅", "吳明")); // print 彭大牆
+console.log(func("郭靜雅", "王立強", "郭林靜宜", "郭立恆", "林花花")); // print 林花花
+console.log(func("郭宣雅", "林靜宜", "郭宣恆", "林靜花")); // print 沒有
+console.log(func("郭宣雅", "夏曼藍波安", "郭宣恆")); // print 夏曼藍波安
 // === Task 4 ===
 console.log("=== Task 4 ===");
 
