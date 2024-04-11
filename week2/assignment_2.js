@@ -226,10 +226,10 @@ console.log(getNumber(30));
 console.log("=== Task 5 ===");
 function find(spaces, stat, n) {
   //車輛供應狀況轉換成布林
-  let stat_turn_boolean = [];
-  for (let i = 0; i < stat.length; i++) {
-    stat_turn_boolean.push(stat[i] === 1);
-  }
+  // let stat_turn_boolean = [];
+  // for (let i = 0; i < stat.length; i++) {
+  //   stat_turn_boolean.push(stat[i] === 1);
+  // }
   //車輛位與乘客數量做比較
   let spaces_turn_check_available = [];
   for (let i = 0; i < spaces.length; i++) {
@@ -240,8 +240,8 @@ function find(spaces, stat, n) {
     }
   }
   //車輛位與供應狀況做比較
-  for (let i = 0; i < stat_turn_boolean.length; i++) {
-    if (stat_turn_boolean[i] === false) {
+  for (let i = 0; i < stat.length; i++) {
+    if (stat[i] === 0) {
       spaces_turn_check_available[i] = "No service";
     }
   }
