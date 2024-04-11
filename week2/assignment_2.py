@@ -181,3 +181,47 @@ print(get_number(1)) # print 4
 print(get_number(5)) # print 15 
 print(get_number(10)) # print 25 
 print(get_number(30)) # print 70
+
+# === Task 5 ===
+print("=== Task 5 ===")
+
+def find(spaces, stat, n):
+    #訪問該陣列的值
+    stat_turn_boolean = []
+    for i in stat:
+        stat_turn_boolean.append(stat[i] == 1)
+    
+
+    spaces_turn_check_available = []
+    
+    for i in spaces:
+        if i >= n:
+            spaces_turn_check_available.append(i)
+        else:
+            spaces_turn_check_available.append("No service")
+   
+    
+    for key , value in enumerate(stat_turn_boolean):
+        if(value is False):
+            spaces_turn_check_available[key] = "No service"
+   
+    
+    min_seat = float("inf")
+    available_seat = ""
+
+    for index , value in enumerate(spaces_turn_check_available):
+        if value == "No service":
+            continue
+        
+        seat = value - n
+
+        if seat <= min_seat :
+            min_seat = seat
+            available_seat = index
+    if available_seat == "" :
+        return -1
+    return available_seat
+
+print(find([3, 1, 5, 4, 3, 2], [0, 1, 0, 1, 1, 1], 2)) # print 5 
+print(find([1, 0, 5, 1, 3], [0, 1, 0, 1, 1], 4)) # print -1 
+print(find([4, 6, 5, 8], [0, 1, 1, 1], 4)) # print 2
