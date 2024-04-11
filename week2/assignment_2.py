@@ -1,7 +1,7 @@
 # === Task 1 ===
 print("=== Task 1 ===")
 def find_and_print(messages, current_station):
-    station_index_map = (
+    station_map_list = (
         "Xiaobitan",
         "Songshan",
         "Nanjing Sanmin",
@@ -23,43 +23,37 @@ def find_and_print(messages, current_station):
         "Xindian City Hall",
         "Xindian",
     )
-    def transform_current_station(current_station,station_index_map):
-        for index , station_name in enumerate(station_index_map):
+    def transform_current_station(current_station,station_map_list):
+        for index , station_name in enumerate(station_map_list):
             if station_name == current_station:
                 return index
         return None
-    def transform_message_data(messages,station_index_map):
+    def transform_message_data(messages,station_map_list):
         name_and_station_newdata = {}
         for person , description in messages.items():
-            for index , station_name in enumerate(station_index_map):
+            for index , station_name in enumerate(station_map_list):
                 if station_name in description:
-                    if person not in name_and_station_newdata:
-                        name_and_station_newdata[person] =[]
-                    name_and_station_newdata[person].append(index)
+                    name_and_station_newdata[person] = index
         return name_and_station_newdata
 
-    user_station_index = transform_current_station(current_station,station_index_map)
-    friend_new_data = transform_message_data(messages,station_index_map)
+    user_station_index = transform_current_station(current_station,station_map_list)
+    friend_new_data = transform_message_data(messages,station_map_list)
     closest_friend = None
     min_distance = float("inf")
     for friend , friend_station_index in friend_new_data.items():
-        #遍歷朋友的station_index的“值”
-        for friend_index_value in friend_station_index:
-            distance = abs(friend_index_value - user_station_index)
-            
-            #比較朋友的索引位置
-            if friend_index_value == 0 :
-                distance = abs(17 - user_station_index) + 1
-            elif user_station_index == 0 :
-                distance =  abs(friend_index_value - 17 ) + 1
-            elif friend_index_value == 0 and user_station_index == 0 :
-                distance = 0
-            else:
-                distance = abs(friend_index_value - user_station_index)
+        #比較朋友的索引位置
+        if friend_station_index == 0 :
+            distance = abs(17 - user_station_index) + 1
+        elif user_station_index == 0 :
+            distance =  abs(friend_station_index - 17 ) + 1
+        elif friend_station_index == 0 and user_station_index == 0 :
+            distance = 0
+        else:
+            distance = abs(friend_station_index - user_station_index)
 
-            if distance < min_distance :
-                min_distance = distance
-                closest_friend = friend
+        if distance < min_distance :
+            min_distance = distance
+            closest_friend = friend
     return closest_friend
 
 messages={
@@ -78,7 +72,6 @@ print(find_and_print(messages, "Xindian City Hall")) # print Vivian
 print("=== Task 2 ===")
 
 def book(consultants, hour, duration, criteria):
-    sorted_consultants = consultants.copy()
     
     if criteria == "rate" :
         sorted_consultants = sorted(consultants,key=lambda x:x["rate"],reverse = True)
@@ -186,11 +179,7 @@ print(get_number(30)) # print 70
 print("=== Task 5 ===")
 
 def find(spaces, stat, n):
-    #訪問該陣列的值
-    stat_turn_boolean = []
-    for i in stat:
-        stat_turn_boolean.append(stat[i] == 1)
-    
+   
 
     spaces_turn_check_available = []
     
@@ -201,8 +190,8 @@ def find(spaces, stat, n):
             spaces_turn_check_available.append("No service")
    
     
-    for key , value in enumerate(stat_turn_boolean):
-        if(value is False):
+    for key , value in enumerate(stat):
+        if(value == 0):
             spaces_turn_check_available[key] = "No service"
    
     
