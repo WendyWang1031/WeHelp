@@ -25,9 +25,9 @@ function findAndPrint(messages, currentStation) {
   ];
   //用戶的地點轉換成索引數字
   function transformCurrentStation(currentStation) {
-    for (let [index, stationName] of stationMapList.entries()) {
+    for (let [key, stationName] of stationMapList.entries()) {
       if (stationName === currentStation) {
-        return parseInt(index);
+        return parseInt(key);
       }
     }
     return null;
@@ -36,9 +36,9 @@ function findAndPrint(messages, currentStation) {
   function transformMessageData(messages, stationMapList) {
     let nameAndStationNewData = {};
     Object.entries(messages).forEach(([person, description]) => {
-      for (let [index, stationName] of stationMapList.entries()) {
+      for (let [key, stationName] of stationMapList.entries()) {
         if (description.includes(stationName)) {
-          nameAndStationNewData[person] = parseInt(index);
+          nameAndStationNewData[person] = parseInt(key);
         }
       }
     });
