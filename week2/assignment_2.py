@@ -124,6 +124,8 @@ print("=== Task 3 ===")
 def func(*data):
     compare_list = []
     unique_count = 0
+    unique_friend =[]
+    
     for x in data :
         char_to_compare = []
         if len(x) == 2 or len(x) == 3 :
@@ -139,11 +141,15 @@ def func(*data):
                 count += 1
         if count == 1 :
             unique_count += 1 
-            return i["name"]
+            unique_friend.append(i["name"])
+            result = ",".join(unique_friend)
+
+            
     if unique_count == 0 :
         return "沒有"
+    return  result
 
-
+print(func("彭大牆", "陳王明雅", "吳明","郭靜雅"))
 print(func("彭大牆", "陳王明雅", "吳明")) # print 彭大牆
 print(func("郭靜雅", "王立強", "郭林靜宜", "郭立恆", "林花花")) # print 林花花 
 print(func("郭宣雅", "林靜宜", "郭宣恆", "林靜花")) # print 沒有 
