@@ -201,8 +201,8 @@ console.log(func("郭靜雅", "王立強", "郭林靜宜", "郭立恆", "林花�
 console.log(func("郭宣雅", "林靜宜", "郭宣恆", "林靜花")); // print 沒有
 console.log(func("郭宣雅", "夏曼藍波安", "郭宣恆")); // print 夏曼藍波安
 
-// === Task 4 ===
-console.log("=== Task 4 ===");
+// === Task 4-2 ===
+console.log("=== Task 4-2 ===");
 
 function getNumber(index) {
   let arr = [0];
@@ -223,6 +223,20 @@ console.log(getNumber(1)); // print 4
 console.log(getNumber(5)); // print 15
 console.log(getNumber(10)); // print 25
 console.log(getNumber(30)); // print 70
+
+function getNumberRecruit(index) {
+  if (index === 0) {
+    return 0;
+  }
+  let result = getNumberRecruit(index - 1) + 4;
+  if (index % 3 === 0) {
+    result = result - 5;
+  }
+
+  return result;
+}
+
+console.log(getNumberRecruit(10));
 
 // === Task 5 ===
 console.log("=== Task 5 ===");
