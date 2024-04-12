@@ -163,6 +163,7 @@ console.log("=== Task 3 ===");
 function func(...data) {
   let compareArr = [];
   let uniqueCount = 0;
+  let uniqueName = [];
   //將資料放入陣列中
   for (let x = 0; x < data.length; x++) {
     let char_to_compare;
@@ -182,20 +183,24 @@ function func(...data) {
         count++;
       }
     }
+
     if (count === 1) {
       uniqueCount++;
-      return compareArr[i].name;
+      uniqueName.push(compareArr[i].name);
     }
   }
+
   if (uniqueCount === 0) {
     return "沒有";
   }
+  return uniqueName.join();
 }
-
+console.log(func("彭大牆", "陳王明雅", "吳明", "郭靜雅"));
 console.log(func("彭大牆", "陳王明雅", "吳明")); // print 彭大牆
 console.log(func("郭靜雅", "王立強", "郭林靜宜", "郭立恆", "林花花")); // print 林花花
 console.log(func("郭宣雅", "林靜宜", "郭宣恆", "林靜花")); // print 沒有
 console.log(func("郭宣雅", "夏曼藍波安", "郭宣恆")); // print 夏曼藍波安
+
 // === Task 4 ===
 console.log("=== Task 4 ===");
 
