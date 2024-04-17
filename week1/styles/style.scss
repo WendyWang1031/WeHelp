@@ -77,18 +77,24 @@ main {
 
         div {
           height: 50px;
-          width: auto;
+          width: 400px;
+
           flex-grow: 1;
           background-color: lightblue;
           align-items: center;
           display: flex;
           margin-right: 20px;
+          overflow: hidden;
+          position: relative;
           img {
+            // height: 100%;
             width: 80px;
-            height: 100%;
-            object-fit: contain;
+            object-fit: cover;
             object-position: left;
           }
+          // div {
+          //   display: inline-block;
+          // }
         }
         :first-child {
           margin-left: 0;

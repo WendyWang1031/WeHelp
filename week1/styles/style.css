@@ -70,18 +70,19 @@ main section.whole-main-promotion-area section.promotion-area div.promotion {
 }
 main section.whole-main-promotion-area section.promotion-area div.promotion div {
   height: 50px;
-  width: auto;
+  width: 400px;
   flex-grow: 1;
   background-color: lightblue;
   align-items: center;
   display: flex;
   margin-right: 20px;
+  overflow: hidden;
+  position: relative;
 }
 main section.whole-main-promotion-area section.promotion-area div.promotion div img {
   width: 80px;
-  height: 100%;
-  -o-object-fit: contain;
-     object-fit: contain;
+  -o-object-fit: cover;
+     object-fit: cover;
   -o-object-position: left;
      object-position: left;
 }
