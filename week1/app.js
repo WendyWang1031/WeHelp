@@ -20,7 +20,7 @@ loadMoreBtn.addEventListener("click", loadMoreContent);
 
 let allImageUrls = [];
 let allLocationNames = [];
-let currentIndex = 0;
+let currentIndex = 12;
 function shortCutString(text, num, maxWidth, element) {
   const elementWidth = element.clientWidth;
 
@@ -86,6 +86,7 @@ fetch(url)
         title.textContent = shortCutText;
       }
     });
+    console.log(currentIndex);
   });
 
 // function loadMoreContent() {
