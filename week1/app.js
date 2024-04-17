@@ -134,7 +134,7 @@ function loadMoreContent() {
   let endIndex = Math.min(currentIndex + 10, allImageUrls.length);
 
   for (let i = 1; i <= 10; i++) {
-    const actualIndex = currentIndex + i - 1;
+    const actualIndex = currentIndex + i;
     const newDiv = document.createElement("div");
     newDiv.className = `title${i}`;
     newDiv.style.backgroundImage = `url(${allImageUrls[actualIndex]})`;
