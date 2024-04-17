@@ -88,37 +88,74 @@ fetch(url)
     });
   });
 
+// function loadMoreContent() {
+//   const original = document.querySelector(".whole-main-title1-area");
+//   const clone = original.cloneNode(true);
+//   btnArea.parentNode.insertBefore(clone, btnArea);
+
+//   const clonedImages = clone.querySelectorAll(".title1-area > div");
+//   const clonedTitles = clone.querySelectorAll(
+//     ".promotion > div > div, .title1-area > div > span > p"
+//   );
+//   const allCurrentImages = document.querySelectorAll(".title1-area > div");
+//   const allCurrentTitles = document.querySelectorAll(
+//     ".whole-main-title1-area .promotion > div > div, .whole-main-title1-area .title1-area > div > span > p"
+//   );
+//   const newStartIndex =
+//     allCurrentImages.length -
+//     clone.querySelectorAll(".title1-area > div").length;
+
+//   clonedImages.forEach((div, index) => {
+//     const imageIndex = newStartIndex + index;
+//     if (imageIndex < allImageUrls.length) {
+//       div.style.backgroundImage = `url(${allImageUrls[imageIndex]})`;
+//     }
+//   });
+//   clonedTitles.forEach((title, index) => {
+//     const titleIndex = newStartIndex + index;
+//     if (titleIndex < allLocationNames.length) {
+//       const fullText = allLocationNames[titleIndex];
+//       const shortCutText = shortCutString(fullText, 6, 200, title);
+//       title.textContent = shortCutText;
+//     }
+//   });
+
+//   currentIndex += newStartIndex + clonedImages.length + clonedTitles.length;
+// }
+
 function loadMoreContent() {
-  const original = document.querySelector(".whole-main-title1-area");
-  const clone = original.cloneNode(true);
-  btnArea.parentNode.insertBefore(clone, btnArea);
+  const btnArea = document.getElementById("btn-area");
+  const newMainTitleArea = document.createElement("section");
+  const newTitleArea = document.createElement("section");
+  newMainTitleArea.className = "whole-main-title1-area";
+  newTitleArea.className = "title1-area";
 
-  const clonedImages = clone.querySelectorAll(".title1-area > div");
-  const clonedTitles = clone.querySelectorAll(
-    ".promotion > div > div, .title1-area > div > span > p"
-  );
-  const allCurrentImages = document.querySelectorAll(".title1-area > div");
-  const allCurrentTitles = document.querySelectorAll(
-    ".whole-main-title1-area .promotion > div > div, .whole-main-title1-area .title1-area > div > span > p"
-  );
-  const newStartIndex =
-    allCurrentImages.length -
-    clone.querySelectorAll(".title1-area > div").length;
+  let endIndex = Math.min(currentIndex + 10, allImageUrls.length);
 
-  clonedImages.forEach((div, index) => {
-    const imageIndex = newStartIndex + index;
-    if (imageIndex < allImageUrls.length) {
-      div.style.backgroundImage = `url(${allImageUrls[imageIndex]})`;
-    }
-  });
-  clonedTitles.forEach((title, index) => {
-    const titleIndex = newStartIndex + index;
-    if (titleIndex < allLocationNames.length) {
-      const fullText = allLocationNames[titleIndex];
-      const shortCutText = shortCutString(fullText, 6, 200, title);
-      title.textContent = shortCutText;
-    }
-  });
+  for (let i = 1; i <= 10; i++) {
+    const actualIndex = currentIndex + i - 1;
+    const newDiv = document.createElement("div");
+    newDiv.className = `title${i}`;
+    newDiv.style.backgroundImage = `url(${allImageUrls[actualIndex]})`;
 
-  currentIndex += newStartIndex + clonedImages.length + clonedTitles.length;
+    const newImg = document.createElement("img");
+    newImg.src = "./images/star_icon.svg";
+    newImg.alt = "";
+
+    const newSpan = document.createElement("span");
+    const newP = document.createElement("p");
+    const fullText = allLocationNames[actualIndex];
+    const shortCutText = shortCutString(fullText, 6, 200, newP);
+    newP.textContent = shortCutText;
+
+    newSpan.appendChild(newP);
+    newDiv.appendChild(newImg);
+    newDiv.appendChild(newSpan);
+
+    newTitleArea.appendChild(newDiv);
+  }
+
+  newMainTitleArea.appendChild(newTitleArea);
+  btnArea.parentNode.insertBefore(newMainTitleArea, btnArea);
+  currentIndex = endIndex;
 }
