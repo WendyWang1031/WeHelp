@@ -3,7 +3,9 @@ const nav = document.querySelector(".navbar-nav");
 const closeBtn = document.querySelector(".close-btn");
 const loadMoreBtn = document.getElementById("loadMoreBtn");
 const btnArea = document.getElementById("btn-area");
-
+window.addEventListener("resize", function () {
+  updateTextContent();
+});
 mobileMenu.addEventListener("click", listExpended);
 function listExpended() {
   nav.classList.add("expanded");
@@ -19,7 +21,18 @@ loadMoreBtn.addEventListener("click", loadMoreContent);
 let allImageUrls = [];
 let allLocationNames = [];
 let currentIndex = 0;
+function shortCutString(text, num, maxWidth, element) {
+  const elementWidth = element.clientWidth;
 
+  if (elementWidth < maxWidth && text.length > num) {
+    return text.slice(0, num) + "...";
+  } else {
+    return text;
+  }
+}
+window.addEventListener("resize", function () {
+  applyTextShortening();
+});
 const url =
   "https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment-1";
 
@@ -68,7 +81,9 @@ fetch(url)
     );
     titleDivsTitle.forEach((title, index) => {
       if (allLocationNames[index + promotionTitle.length]) {
-        title.textContent = allLocationNames[index + promotionTitle.length];
+        const fullText = allLocationNames[index + promotionTitle.length];
+        const shortCutText = shortCutString(fullText, 6, 200, title);
+        title.textContent = shortCutText;
       }
     });
   });
@@ -99,20 +114,11 @@ function loadMoreContent() {
   clonedTitles.forEach((title, index) => {
     const titleIndex = newStartIndex + index;
     if (titleIndex < allLocationNames.length) {
-      title.textContent = allLocationNames[titleIndex];
+      const fullText = allLocationNames[titleIndex];
+      const shortCutText = shortCutString(fullText, 6, 200, title);
+      title.textContent = shortCutText;
     }
   });
 
   currentIndex += newStartIndex + clonedImages.length + clonedTitles.length;
-}
-
-function shortCutString(element, num, maxWidth) {
-  const textContent = element.textContent;
-  const elementWidth = element.clientWidth;
-
-  if (elementWidth < maxWidth && textContent > num) {
-    return textContent.slice(0, num) + "...";
-  } else {
-    return textContent;
-  }
 }

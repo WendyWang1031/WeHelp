@@ -88,7 +88,6 @@ fetch(url)
     });
   });
 
-<<<<<<< HEAD
 // function loadMoreContent() {
 //   const original = document.querySelector(".whole-main-title1-area");
 //   const clone = original.cloneNode(true);
@@ -159,39 +158,4 @@ function loadMoreContent() {
   newMainTitleArea.appendChild(newTitleArea);
   btnArea.parentNode.insertBefore(newMainTitleArea, btnArea);
   currentIndex = endIndex;
-=======
-function loadMoreContent() {
-  const original = document.querySelector(".whole-main-title1-area");
-  const clone = original.cloneNode(true);
-  btnArea.parentNode.insertBefore(clone, btnArea);
-
-  const clonedImages = clone.querySelectorAll(".title1-area > div");
-  const clonedTitles = clone.querySelectorAll(
-    ".promotion > div > div, .title1-area > div > span > p"
-  );
-  const allCurrentImages = document.querySelectorAll(".title1-area > div");
-  const allCurrentTitles = document.querySelectorAll(
-    ".whole-main-title1-area .promotion > div > div, .whole-main-title1-area .title1-area > div > span > p"
-  );
-  const newStartIndex =
-    allCurrentImages.length -
-    clone.querySelectorAll(".title1-area > div").length;
-
-  clonedImages.forEach((div, index) => {
-    const imageIndex = newStartIndex + index;
-    if (imageIndex < allImageUrls.length) {
-      div.style.backgroundImage = `url(${allImageUrls[imageIndex]})`;
-    }
-  });
-  clonedTitles.forEach((title, index) => {
-    const titleIndex = newStartIndex + index;
-    if (titleIndex < allLocationNames.length) {
-      const fullText = allLocationNames[titleIndex];
-      const shortCutText = shortCutString(fullText, 6, 200, title);
-      title.textContent = shortCutText;
-    }
-  });
-
-  currentIndex += newStartIndex + clonedImages.length + clonedTitles.length;
->>>>>>> 8d8ecb3 (update to week1 file code)
 }
