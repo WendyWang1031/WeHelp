@@ -30,31 +30,12 @@ with request.urlopen(assignment2_src, context=context) as assignment2_response:
     assignment2_data = json.load(assignment2_response) # 利用JSON模組處理資料格式
 assignment2_clist = assignment2_data["data"]
 
+spot_data = []
+assignment1_serial_location = {}
 assignment2_serial_district = {}
 assignment2_mrt_serial = {}
 pattern = r'\w+區'
-for spot in assignment2_clist:
-        serial_no2 = spot["SERIAL_NO"]
-        address = spot["address"]
-        mrt = spot["MRT"]
 
-        matching_no2_district = re.search(pattern,address)
-        no2_district = matching_no2_district.group()
-        assignment2_serial_district[serial_no2] = no2_district
-
-        if mrt in assignment2_mrt_serial:
-             assignment2_mrt_serial[mrt].append(serial_no2)
-        else:
-             assignment2_mrt_serial[mrt] = [serial_no2]
-
-
-
-# print(assignment2_mrt_serial)
-# for key , value in assignment2_serial_district.items():
-#     print(key ,value)
-
-spot_data = []
-assignment1_serial_location = {}
 for spot in assignment1_clist:
         title = spot["stitle"]
         longitude = spot["longitude"]
@@ -62,8 +43,6 @@ for spot in assignment1_clist:
         filelist = spot["filelist"]
         info = spot["info"]
         serial_no1 = spot["SERIAL_NO"]
-        
-        
         
         first_image_url = "https"+filelist.split("https")[1]
         serial_no1_district = assignment2_serial_district.get(serial_no1)  
@@ -80,16 +59,40 @@ for spot in assignment1_clist:
 # for all_key in spot_data:
 #     print(all_key)
 
-for mrt , serials in assignment2_mrt_serial.items():
-    updated_serials = []
-    for serail in serials :
-        if serail in assignment1_serial_location :
-            updated_serials.extend(assignment1_serial_location[serail])
+for spot in assignment2_clist:
+        serial_no2 = spot["SERIAL_NO"]
+        address = spot["address"]
+        mrt = spot["MRT"]
+
+        #使用re.search搭配group()
+        matching_no2_district = re.search(pattern,address)
+        no2_district = matching_no2_district.group()
+        assignment2_serial_district[serial_no2] = no2_district
+
+        if mrt in assignment2_mrt_serial:
+             assignment2_mrt_serial[mrt].append(serial_no2)
         else:
-            updated_serials.append(serail)
-    assignment2_mrt_serial[mrt] = updated_serials
+             assignment2_mrt_serial[mrt] = [serial_no2]
+
+
 
 # print(assignment2_mrt_serial)
+# for key , value in assignment2_serial_district.items():
+#     print(key ,value)
+
+
+
+#清單1和清單2的序號互相比較
+for mrt , serials in assignment2_mrt_serial.items():
+    updated_serials = []
+    for serial in serials :
+        if serial in assignment1_serial_location :
+            updated_serials.extend(assignment1_serial_location[serial])
+        else:
+            updated_serials.append(serial)
+    assignment2_mrt_serial[mrt] = updated_serials
+
+
 
 
 with open("spot.csv" , "w" , encoding="utf-8") as file:
