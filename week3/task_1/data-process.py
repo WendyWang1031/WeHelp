@@ -92,15 +92,18 @@ for mrt , serials in assignment2_mrt_serial.items():
 # print(assignment2_mrt_serial)
 
 
-with open("task_1/spot.csv" , "w" , encoding="utf-8") as file:
+with open("spot.csv" , "w" , encoding="utf-8") as file:
     writer = csv.writer(file)
     for data in spot_data:
         writer.writerow(data)
 
-with open("task_1/mrt.csv" , "w" , encoding="utf-8") as file:
+with open("mrt.csv" , "w" , encoding="utf-8") as file:
     writer = csv.writer(file)
-    for mrt_station, serials in assignment2_mrt_serial.items():
-        serials_str = ",".join(serials)
-        writer.writerow([mrt_station,serials_str])
+    max_len = max(len(serials) for serials in  assignment2_mrt_serial.values())
+    header = ["MRT Station"] + [f"Spot {i+1}" for i in range(max_len)]
+    writer.writerow(header)
+    for mrt_station, spot in assignment2_mrt_serial.items():
+        row = [mrt_station] + spot
+        writer.writerow(row)
     
     
