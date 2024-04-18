@@ -99,9 +99,9 @@ with open("spot.csv" , "w" , encoding="utf-8") as file:
 
 with open("mrt.csv" , "w" , encoding="utf-8") as file:
     writer = csv.writer(file)
-    max_len = max(len(serials) for serials in  assignment2_mrt_serial.values())
-    header = ["MRT Station"] + [f"Spot {i+1}" for i in range(max_len)]
-    writer.writerow(header)
+    # max_len = max(len(serials) for serials in  assignment2_mrt_serial.values())
+    # header = ["MRT Station"] + [f"Spot {i+1}" for i in range(max_len)]
+    # writer.writerow(header)
     for mrt_station, spot in assignment2_mrt_serial.items():
         row = [mrt_station] + spot
         writer.writerow(row)
