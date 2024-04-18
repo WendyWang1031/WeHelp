@@ -20,7 +20,7 @@ loadMoreBtn.addEventListener("click", loadMoreContent);
 
 let allImageUrls = [];
 let allLocationNames = [];
-let currentIndex = 12;
+let currentIndex = 13;
 function shortCutString(text, num, maxWidth, element) {
   const elementWidth = element.clientWidth;
 
@@ -132,26 +132,32 @@ function loadMoreContent() {
   newTitleArea.className = "title1-area";
 
   let endIndex = Math.min(currentIndex + 10, allImageUrls.length);
+  let countOfElementsToCreate = endIndex - currentIndex;
 
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 0; i < 10; i++) {
     const actualIndex = currentIndex + i;
     const newDiv = document.createElement("div");
-    newDiv.className = `title${i}`;
-    newDiv.style.backgroundImage = `url(${allImageUrls[actualIndex]})`;
+    newDiv.className = `title${i + 1}`;
+    if (i < countOfElementsToCreate) {
+      newDiv.style.backgroundImage = `url(${allImageUrls[actualIndex]})`;
 
-    const newImg = document.createElement("img");
-    newImg.src = "./images/star_icon.svg";
-    newImg.alt = "";
+      const newImg = document.createElement("img");
+      newImg.src = "./images/star_icon.svg";
+      newImg.alt = "";
 
-    const newSpan = document.createElement("span");
-    const newP = document.createElement("p");
-    const fullText = allLocationNames[actualIndex];
-    const shortCutText = shortCutString(fullText, 6, 200, newP);
-    newP.textContent = shortCutText;
+      const newSpan = document.createElement("span");
+      const newP = document.createElement("p");
+      const fullText = allLocationNames[actualIndex];
+      const shortCutText = shortCutString(fullText, 6, 200, newP);
+      newP.textContent = shortCutText;
 
-    newSpan.appendChild(newP);
-    newDiv.appendChild(newImg);
-    newDiv.appendChild(newSpan);
+      newSpan.appendChild(newP);
+      newDiv.appendChild(newImg);
+      newDiv.appendChild(newSpan);
+    } else {
+      newDiv.visibility = "hidden";
+      newDiv.style.backgroundImage = "none";
+    }
 
     newTitleArea.appendChild(newDiv);
   }
@@ -159,4 +165,9 @@ function loadMoreContent() {
   newMainTitleArea.appendChild(newTitleArea);
   btnArea.parentNode.insertBefore(newMainTitleArea, btnArea);
   currentIndex = endIndex;
+  if (currentIndex >= allImageUrls.length) {
+    if (loadMoreBtn) {
+      loadMoreBtn.style.display = "none";
+    }
+  }
 }
