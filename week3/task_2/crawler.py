@@ -16,6 +16,7 @@ def get_every_page_info(every_article_url):
             data=response.read().decode("utf-8")
         root = bs4.BeautifulSoup(data,"html.parser")
         
+        # 尋找文章的時間
         publish_time = None
         metalines = root.find_all("div" , class_="article-metaline")
         for metaline in metalines:
@@ -54,9 +55,6 @@ def get_data(url):
             article_url =  "https://www.ptt.cc" + title.a["href"]
             publish_time , like_count , dislike_count = get_every_page_info(article_url)
             data_storage.append([article_title,f"{like_count}/{dislike_count}",publish_time])
-
-    
-    
 
     next_link = root.find("a", string="‹ 上頁")
     if next_link:
