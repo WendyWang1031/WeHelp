@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="zh-Hant" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Member Login System</title>
+    <link rel="stylesheet" href="/static/styles/home_page.css" />
+  </head>
+  <body>
+    <section class="welcome-area">
+      <div class="welcome-text">
+        <h1>歡迎光臨，請輸入帳號密碼</h1>
+      </div>
+    </section>
+
+    <section class="log-in">
+      <p class="title">登入系統</p>
+
+      <form action="/signin/" method="post" class="input-area">
+        <div class="account">
+          <p>帳號</p>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder=" 請輸入帳號"
+            required
+          />
+        </div>
+        <br />
+        <div class="password">
+          <p>密碼</p>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder=" 請輸入密碼"
+            required
+          />
+        </div>
+        <div class="agree-area">
+          <label for="agree">同意條款</label>
+          <input type="checkbox" id="agree-box" name="agree" />
+        </div>
+
+        <button class="submit-btn">登入</button>
+      </form>
+    </section>
+  </body>
+  <script src="/static/js/app.js"></script>
+</html>
