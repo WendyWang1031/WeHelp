@@ -15,10 +15,6 @@ templates = Jinja2Templates( directory = "templates" )
 #         request = request , name = "index.html" , context = {"id" : id}
 #     )
 
-class ErrorMessage(Enum):
-    USERNAME_BLANK = "Please enter username and password"
-    PASSWORD_BLANK = "Please enter username and password"
-    CREDENTIALS_ERROR = "Username or password is not correct"
 
 @app.get("/" , response_class= HTMLResponse )
 async def get_signin(request: Request):
@@ -28,11 +24,18 @@ async def get_signin(request: Request):
 
 @app.post("/signin/")
 async def signin(request : Request , username : Annotated [str , Form()], password : Annotated [str , Form()]):
+    
     if username == "test" and password == "test":
         response = RedirectResponse(url="/member" , status_code= status.HTTP_302_FOUND)
         return response
+    elif username.strip() == "" or password.strip() == "":
+        error_message = "Please enter username and password"
+        from urllib.parse import quote
+        return RedirectResponse(url = f"/error?message={quote(error_message)}" , status_code = status.HTTP_303_SEE_OTHER)
     else:
-        return templates.TemplateResponse("error.html" , {"request" : request , "error" : "Invalid username or password"})
+        error_message = "Username or password is not correct"
+        from urllib.parse import quote
+        return RedirectResponse(url = f"/error?message={quote(error_message)}" , status_code = status.HTTP_303_SEE_OTHER)
 
 @app.get("/member/" , response_class = HTMLResponse )
 async def signin_successed(request: Request):
@@ -41,5 +44,5 @@ async def signin_successed(request: Request):
     )
 
 @app.get("/error" , response_class = HTMLResponse )
-async def show_error(request : Request , message : ErrorMessage = Query(...)):
-    return templates.TemplateResponse("error.html" , {"request" : request , "error_message" : message.value})
+async def show_error(request : Request , message : str = ""):
+    return templates.TemplateResponse("error.html" , {"request" : request , "error" : message})
