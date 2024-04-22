@@ -39,6 +39,7 @@ section.log-in {
 
   form.input-area {
     margin: 5px;
+    text-align: center;
 
     div.account {
       display: inline-flex;
@@ -70,6 +71,7 @@ section.log-in {
 }
 
 button.submit-btn {
+  text-align: center;
   font-size: 15px;
   padding-top: 5px;
   padding-bottom: 5px;

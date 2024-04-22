@@ -24,18 +24,18 @@ async def get_signin(request: Request):
 
 @app.post("/signin/")
 async def signin(request : Request , username : Annotated [str , Form()], password : Annotated [str , Form()]):
-    
+    print("See signin successful or not?") 
     if username == "test" and password == "test":
         response = RedirectResponse(url="/member" , status_code= status.HTTP_302_FOUND)
         return response
     elif username.strip() == "" or password.strip() == "":
         error_message = "Please enter username and password"
         from urllib.parse import quote
-        return RedirectResponse(url = f"/error?message={quote(error_message)}" , status_code = status.HTTP_303_SEE_OTHER)
+        return RedirectResponse(url = f"/error?message={quote(error_message)}" , status_code = status.HTTP_302_FOUND)
     else:
         error_message = "Username or password is not correct"
         from urllib.parse import quote
-        return RedirectResponse(url = f"/error?message={quote(error_message)}" , status_code = status.HTTP_303_SEE_OTHER)
+        return RedirectResponse(url = f"/error?message={quote(error_message)}" , status_code = status.HTTP_302_FOUND)
 
 @app.get("/member/" , response_class = HTMLResponse )
 async def signin_successed(request: Request):
