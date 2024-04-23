@@ -92,42 +92,66 @@ button.submit-btn:active {
   cursor: pointer;
 }
 
-section.math-area {
-  margin: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  p.title {
-    font-size: 20px;
-    margin: 10px;
-    font-weight: bold;
-  }
-
-  div.input-area {
-    margin: 5px;
-    text-align: center;
-
-    display: inline-flex;
-    margin-bottom: 10px;
-    p {
-      margin-right: 5px;
-    }
-    input {
-      border: 1px solid rgb(0, 0, 0);
-      border-radius: 3px;
+form.calculate {
+  section.math-area {
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    p.title {
+      font-size: 20px;
+      margin: 10px;
+      font-weight: bold;
     }
 
-    input.number {
+    div.input-area {
+      margin: 5px;
+      text-align: center;
+
       display: inline-flex;
       margin-bottom: 10px;
-
+      p {
+        margin-right: 5px;
+      }
       input {
         border: 1px solid rgb(0, 0, 0);
         border-radius: 3px;
       }
+
+      input.number {
+        display: inline-flex;
+        margin-bottom: 10px;
+
+        input {
+          border: 1px solid rgb(0, 0, 0);
+          border-radius: 3px;
+        }
+      }
     }
   }
+  button.cal-btn {
+    text-align: center;
+    font-size: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border: 1px solid black;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+
+  button.cal-btn:hover {
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    cursor: pointer;
+  }
+  button.cal-btn:active {
+    color: gray;
+    background-color: rgb(228, 228, 228);
+    cursor: pointer;
+  }
 }
+
 hr {
   border: 0;
   border-top: 1px solid #d0d0d5;

@@ -45,19 +45,21 @@
       </form>
     </section>
     <hr />
-    <section class="math-area">
-      <p class="title">計算正整數的平方</p>
-      <div class="input-area">
-        <p>正整數</p>
-        <input
-          type="number"
-          id="number"
-          name="number"
-          placeholder=" 請輸入數字"
-        />
-      </div>
-      <button class="submit-btn">計算</button>
-    </section>
+    <form class="calculate" onsubmit="return false">
+      <section class="math-area">
+        <p class="title">計算正整數的平方</p>
+        <div class="input-area">
+          <p>正整數</p>
+          <input
+            type="text"
+            id="number"
+            name="number"
+            placeholder=" 請輸入數字"
+          />
+        </div>
+        <button class="cal-btn">計算</button>
+      </section>
+    </form>
   </body>
   <script src="/static/js/app.js"></script>
 </html>
