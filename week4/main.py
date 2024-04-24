@@ -20,7 +20,7 @@ async def get_signin(request: Request):
         request = request , name = "index.html" , context = {"request" : request}
     )
 
-@app.get("/signout/" , response_class= HTMLResponse )
+@app.get("/signout" , response_class= HTMLResponse )
 async def get_signout(request: Request):
     request.session["SIGNED-IN"] = False
     response = RedirectResponse(url="/" , status_code= status.HTTP_302_FOUND)
@@ -28,7 +28,7 @@ async def get_signout(request: Request):
     return response
 
 
-@app.post("/signin/")
+@app.post("/signin")
 async def signin(request : Request , username :  str = Form(default = "") , password :  str = Form(default = "")  ):
     
     if username == "test" and password == "test":
@@ -46,7 +46,7 @@ async def signin(request : Request , username :  str = Form(default = "") , pass
 
     
 
-@app.get("/member/" , response_class = HTMLResponse )
+@app.get("/member" , response_class = HTMLResponse )
 async def signin_successed(request: Request):
     if "SIGNED-IN" in request.session and request.session["SIGNED-IN"]:
         return templates.TemplateResponse(
