@@ -64,6 +64,7 @@ async def square_math(request : Request , cal : int):
     result = cal * cal
     return templates.TemplateResponse("square.html" , {"request" : request , "result" : result})
 
+# 使用post來渲染數字頁面
 # @app.post("/calculate/")
 # async def calculate_square( number : int = Form(default = 0)):
     
