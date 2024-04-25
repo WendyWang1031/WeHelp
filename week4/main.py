@@ -10,7 +10,6 @@ app.mount("/static" , StaticFiles ( directory = "static" ) , name = "static")
 app.add_middleware(SessionMiddleware , secret_key = "your-secret-key")
 templates = Jinja2Templates( directory = "templates" )
 
-
 @app.get("/" , response_class= HTMLResponse )
 async def get_signin(request: Request):
     return templates.TemplateResponse(
