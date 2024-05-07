@@ -44,7 +44,21 @@ def insert_new_user(name , register_username , register_password):
         connection.close()
     return True
 
+def check_username(username , password):
+    connection = get_db_connection()
+    try:
+        db = connection.cursor( dictionary = True )
+        db.execute("select * from member where username = %s and password = %s " , ( username , password ))
+        user_record = db.fetchone()
+        return user_record
+    
+    except Exception as e:
+        logging.error(f"Database error:{e}")
+        return False
 
+    finally:
+        db.close()
+        connection.close()
 
 if __name__ == "__main__":
     pass

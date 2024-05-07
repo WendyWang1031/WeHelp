@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse , RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
-from db import check_username_exists , insert_new_user
+from db import check_username_exists , insert_new_user  , check_username
 from mysql.connector import cursor
 from typing import Annotated
 
@@ -39,15 +39,13 @@ async def get_signup( name :  Annotated[str, Form()] , register_username :  Anno
 
 @app.post("/signin")
 async def signin(request : Request , username :  str = Form(default = "") , password :  str = Form(default = "")  ):
-    
-    if username == "test" and password == "test":
+    user_record = check_username(username , password)
+    if user_record:
         request.session["SIGNED-IN"] = True
+        request.session["name"] = user_record["name"]
         response = RedirectResponse(url="/member" , status_code= status.HTTP_302_FOUND)
         return response
-    elif username.strip() == "" or password.strip() == "":
-        error_message = "Please enter username and password"
-        response = RedirectResponse(url = f"/error?message={quote(error_message)}" , status_code = status.HTTP_302_FOUND)
-        return response
+    
     else:
         error_message = "Username or password is not correct"
         response = RedirectResponse(url = f"/error?message={quote(error_message)}" , status_code = status.HTTP_302_FOUND)
@@ -58,8 +56,9 @@ async def signin(request : Request , username :  str = Form(default = "") , pass
 @app.get("/member" , response_class = HTMLResponse )
 async def signin_successed(request: Request):
     if "SIGNED-IN" in request.session and request.session["SIGNED-IN"]:
+        user_name = request.session.get("name")
         return templates.TemplateResponse(
-            request = request , name = "member.html" , context = {"request" : request}
+            request = request , name = "member.html" , context = {"request" : request , "user_name" : user_name}
     )
     else:
         return RedirectResponse(url = "/" , status_code = status.HTTP_302_FOUND)
