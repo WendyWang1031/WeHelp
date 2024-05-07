@@ -1,39 +1,23 @@
-const submitBtn = document.querySelector(".submit-btn");
-const agreeCheckBox = document.getElementById("agree-box");
-const calBtn = document.querySelector(".cal-btn");
+const registerSubmitBtn = document.querySelector(".submit-btn");
+const signInBtn = document.querySelector(".log-in-btn");
 
-submitBtn.addEventListener("click", checkUserHitBox);
-agreeCheckBox.addEventListener("click", checkUserAgree);
-document.addEventListener("DOMContentLoaded", (event) => {
-  calBtn.addEventListener("click", checkCalculate);
-});
+registerSubmitBtn.addEventListener("click", checkRegisterUser);
 
-function checkUserAgree() {
-  if (agreeCheckBox.checked) {
-    console.log("agree!");
-  } else {
-    console.log("no ~ not checked");
-  }
-}
-
-function checkUserHitBox() {
-  if (!agreeCheckBox.checked) {
-    alert("Please check the checkbox first");
+function checkRegisterUser() {
+  const register_nameInput = document.querySelector("#name").value;
+  const register_usernameInput =
+    document.querySelector("#register-username").value;
+  const register_passwordInput =
+    document.querySelector("#register-password").value;
+  if (
+    register_nameInput === "" ||
+    register_usernameInput === "" ||
+    register_passwordInput === ""
+  ) {
+    alert("Please enter your name , username and password.");
     event.preventDefault();
     return;
   } else {
     console.log("good job! You agreed!");
   }
-}
-
-function checkCalculate(event) {
-  const inputNumber = document.getElementById("number").value;
-  let number = parseInt(inputNumber);
-  if (number < 0 || isNaN(number)) {
-    alert("Please enter a positive number");
-    event.preventDefault();
-    return;
-  }
-
-  window.location.href = `/square/${number}`;
 }
