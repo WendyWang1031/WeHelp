@@ -16,7 +16,7 @@
     <section class="sign-in">
       <p class="title">註冊帳號</p>
 
-      <form action="/signin" method="post" class="input-area">
+      <form class="input-area">
         <div class="name">
           <p>姓名</p>
           <input type="text" id="name" name="name" placeholder=" 請輸入姓名" />
@@ -26,8 +26,8 @@
           <p>帳號</p>
           <input
             type="text"
-            id="username"
-            name="username"
+            id="register-username"
+            name="register-username"
             placeholder=" 請輸入帳號"
           />
         </div>
@@ -35,8 +35,8 @@
           <p>密碼</p>
           <input
             type="password"
-            id="password"
-            name="password"
+            id="register-password"
+            name="register-password"
             placeholder=" 請輸入密碼"
           />
         </div>
@@ -45,7 +45,7 @@
       </form>
     </section>
     <hr />
-    <form class="log-in" onsubmit="return false">
+    <form action="/signin" method="post" class="log-in">
       <section class="log-in-area">
         <p class="title">登入系統</p>
         <div class="username-area">

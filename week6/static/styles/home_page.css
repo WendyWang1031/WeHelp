@@ -38,7 +38,6 @@ section.sign-in {
   }
 
   form.input-area {
-    margin: 5px;
     text-align: center;
     display: flex;
     flex-direction: column;
