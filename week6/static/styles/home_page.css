@@ -160,3 +160,88 @@ hr {
   border: 0;
   border-top: 1px solid #d0d0d5;
 }
+
+section.main-message {
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p.title {
+    font-size: 20px;
+    margin: 10px;
+    font-weight: bold;
+  }
+  form.leave-message {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    div.leave-message-content {
+      display: inline-flex;
+      margin-bottom: 10px;
+      p {
+        margin-right: 5px;
+      }
+      input {
+        border: 1px solid rgb(0, 0, 0);
+        border-radius: 3px;
+      }
+    }
+
+    button.submit-message-btn {
+      text-align: center;
+      font-size: 15px;
+      padding: 6px 10px;
+      border: 1px solid black;
+      border-radius: 3px;
+      margin-bottom: 10px;
+      align-self: center;
+    }
+
+    button.submit-message-btn:hover {
+      box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+      cursor: pointer;
+    }
+    button.submit-message-btn:active {
+      color: gray;
+      background-color: rgb(228, 228, 228);
+      cursor: pointer;
+    }
+  }
+}
+.for-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+section.show-message-area {
+  margin: 15px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  flex-wrap: nowrap;
+
+  button.delete-message-btn {
+    text-align: center;
+    align-items: center;
+    align-self: center;
+    font-size: 10px;
+    padding: 6px 8px;
+    border: 1px solid black;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
+
+  button.delete-message-btn:hover {
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    cursor: pointer;
+  }
+  button.delete-message-btn:active {
+    color: gray;
+    background-color: rgb(228, 228, 228);
+    cursor: pointer;
+  }
+}
