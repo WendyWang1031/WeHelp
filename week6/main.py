@@ -1,11 +1,12 @@
 from urllib.parse import quote
-from fastapi import FastAPI , Request , Form , HTTPException , status , Query , Depends
+from fastapi import FastAPI , Request , Form , HTTPException , status , Query , Depends , status
 from fastapi.responses import HTMLResponse , RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
-from db import get_db
+from db import check_username_exists , insert_new_user
 from mysql.connector import cursor
+from typing import Annotated
 
 app = FastAPI()
 app.mount("/static" , StaticFiles ( directory = "static" ) , name = "static")
@@ -25,6 +26,16 @@ async def get_signout(request: Request):
     response.delete_cookie("session")
     return response
 
+@app.post("/signup" , response_class= HTMLResponse )
+async def get_signup( name :  Annotated[str, Form()] , register_username :  Annotated[str, Form()] , register_password :  Annotated[str, Form()]):
+    if check_username_exists(register_username) :
+        error_message = quote("Repeated username")
+        response = RedirectResponse(url = f"/error?message={error_message}" , status_code= status.HTTP_302_FOUND)
+        return response
+    else:
+        insert_new_user(name , register_username , register_password)
+        response = RedirectResponse(url="/" , status_code= status.HTTP_302_FOUND)
+        return response
 
 @app.post("/signin")
 async def signin(request : Request , username :  str = Form(default = "") , password :  str = Form(default = "")  ):
@@ -55,7 +66,7 @@ async def signin_successed(request: Request):
 
 @app.get("/error" , response_class = HTMLResponse )
 async def show_error(request : Request , message : str = ""):
-    return templates.TemplateResponse("error.html" , {"request" : request , "error" : message})
+    return templates.TemplateResponse("error.html" , {"request" : request , "message" : message})
 
 @app.get("/square/{cal}" , response_class = HTMLResponse )
 async def square_math(request : Request , cal : int):

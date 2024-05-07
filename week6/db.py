@@ -1,5 +1,6 @@
 from fastapi import Depends
 import mysql.connector
+import logging
 
 def get_db_connection():
     try:
@@ -16,31 +17,34 @@ def get_db_connection():
         raise
     return connection
 
-def get_db():
+def check_username_exists(register_username):
     connection = get_db_connection()
-    db = connection.cursor( buffered=True )
-
     try:
-        yield db
+        db = connection.cursor()
+        db.execute("select username from member where username = %s" , (register_username,))
+        user = db.fetchone()
     finally:
         db.close()
         connection.close()
+    
+    return user is not None
 
-def query_user(username , password):
-    db_generator = get_db()
-    db = next(db_generator)
-
+def insert_new_user(name , register_username , register_password):
+    connection = get_db_connection()
     try:
-        query = "select * from member where username = %s and password = %s"
-        db.execute(query , (username , password))
-        result = db.fetchone()
-        if result:
-            print("User Found:" , result)
-        else:
-            print("No user found with the provided username and password")
+        db = connection.cursor()
+        db.execute("insert into member (name , username , password) values (%s , %s , %s)" , (name , register_username , register_password))
+        connection.commit()
+        logging.info("User successfully added: %s" , register_username)
+    except Exception as e:
+        logging.error("Failed to add user: %s" , e)
+        return False
     finally:
-        next(db_generator , None)
+        db.close()
+        connection.close()
+    return True
+
 
 
 if __name__ == "__main__":
-    query_user("test" , "test")
+    pass

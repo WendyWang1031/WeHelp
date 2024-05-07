@@ -3,7 +3,7 @@ const signInBtn = document.querySelector(".log-in-btn");
 
 registerSubmitBtn.addEventListener("click", checkRegisterUser);
 
-function checkRegisterUser() {
+function checkRegisterUser(event) {
   const register_nameInput = document.querySelector("#name").value;
   const register_usernameInput =
     document.querySelector("#register-username").value;
@@ -18,6 +18,6 @@ function checkRegisterUser() {
     event.preventDefault();
     return;
   } else {
-    console.log("good job! You agreed!");
+    console.log("good job! All field are filled!");
   }
 }
