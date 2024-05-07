@@ -112,7 +112,7 @@ form.log-in {
     }
 
     div {
-      margin: 5px;
+      /* margin: 5px; */
       text-align: center;
 
       display: inline-flex;
@@ -128,7 +128,7 @@ form.log-in {
       input.username,
       input.password {
         display: inline-flex;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
 
         input {
           border: 1px solid rgb(0, 0, 0);
