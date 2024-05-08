@@ -43,12 +43,19 @@
       {% for message in show_message %}
       <section class="show-message-area">
         <div class="show-message-content">
-          <form action="" method="" class="leave-message">
+          <form action="/deleteMessage" method="post" class="leave-message">
             {{ message.name }}：{{ message.content }}
           </form>
         </div>
         {% if message.member_id == user_id %}
-        <button class="delete-message-btn">X</button>
+        <form action="/deleteMessage" method="post">
+          <input
+            type="hidden"
+            name="message_id"
+            value="{{ message.message_id }}"
+          />
+          <button type="submit" class="delete-message-btn">X</button>
+        </form>
         {% endif%}
       </section>
       {% endfor %}

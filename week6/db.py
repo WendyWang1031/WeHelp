@@ -65,7 +65,8 @@ def get_all_messages():
     try:
         db = connection.cursor( dictionary = True )
         db.execute("""
-                   select member.name , message.content , message.member_id from message
+                   select message.id as message_id , member.id as member_id , member.name , message.content
+                   from message
                    join member on  message.member_id = member.id
                    order by message.time desc
                    """)
@@ -93,6 +94,36 @@ def save_message(member_id , content):
         db.close()
         connection.close()
 
+def is_user_message_owner(user_id , message_id):
+    connection = get_db_connection()
+    try:
+        db = connection.cursor( dictionary = True )
+        db.execute("select id from message where member_id= %s and id= %s" , (user_id , message_id)) 
+        message = db.fetchone()
+        return bool(message)
+    
+    except Exception as e:
+        logging.error(f"Error verifing message owner: {e} ")
+        return False
+
+    finally:
+        db.close()
+        connection.close()
+
+
+def delete_message(message_id):
+    connection = get_db_connection()
+    try:
+        db = connection.cursor()
+        db.execute("delete from message where id= %s" , (message_id,)) 
+        connection.commit()
+    
+    except Exception as e:
+        logging.error(f"Error deleting message: {e} ")
+
+    finally:
+        db.close()
+        connection.close()
 
 if __name__ == "__main__":
     pass

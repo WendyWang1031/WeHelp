@@ -25,9 +25,25 @@ function checkMessage(event) {
 
 function checkDeleteMessage(event) {
   event.preventDefault();
-  if (confirm("Are you sure you want to delete the message?") == true) {
-    console.log("Yes,delete");
+  let form = event.target.closest("form");
+  console.log("Form found:", form);
+  console.log("Form action:", form ? form.action : "No action");
+  console.log("Form method:", form ? form.method : "No method");
+  console.log(
+    "message_id value:",
+    form
+      ? form.querySelector('input[name="message_id"]').value
+      : "No message_id"
+  );
+  if (confirm("Are you sure you want to delete the message?")) {
+    console.log("Submittimg form...");
+    if (form) {
+      form.submit();
+      console.log("Ready to submit");
+    } else {
+      console.log("No form found.");
+    }
   } else {
-    console.log("Nooooo!");
+    console.log("Deletion cancelled");
   }
 }

@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse , RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
-from db import check_username_exists , insert_new_user  , check_username , get_all_messages , save_message
+from db import check_username_exists , insert_new_user  , check_username , get_all_messages , save_message , delete_message , is_user_message_owner
 from mysql.connector import cursor
 from typing import Annotated
 
@@ -67,6 +67,8 @@ async def signin_successed(request: Request):
     )
     else:
         return RedirectResponse(url = "/" , status_code = status.HTTP_302_FOUND)
+    
+
 
 @app.get("/error" , response_class = HTMLResponse )
 async def show_error(request : Request , message : str = ""):
@@ -83,6 +85,25 @@ async def message_input_output( request : Request , message_content :  str = For
             return RedirectResponse(url= "/member" , status_code= status.HTTP_302_FOUND)
     else:
         return RedirectResponse(url= "/" , status_code= status.HTTP_302_FOUND)
+    
+
+
+@app.post("/deleteMessage" , response_class= HTMLResponse)
+async def message_delete( request : Request , message_id :  int = Form(...)):
+    
+    if "SIGNED-IN" in request.session and request.session["SIGNED-IN"]:
+        user_id = request.session.get("id")
+        if is_user_message_owner(user_id , message_id):
+            delete_message(message_id)
+            return RedirectResponse(url= "/member" , status_code= status.HTTP_302_FOUND)
+        else:
+            return RedirectResponse(url= "/member" , status_code= status.HTTP_403_FORBIDDEN)
+    
+    else:
+        return RedirectResponse(url= "/" , status_code= status.HTTP_302_FOUND)
+
+
+    
 
 # @app.get("/square/{cal}" , response_class = HTMLResponse )
 # async def square_math(request : Request , cal : int):
