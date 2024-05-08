@@ -47,7 +47,9 @@
             {{ message.name }}：{{ message.content }}
           </form>
         </div>
+        {% if message.member_id == user_id %}
         <button class="delete-message-btn">X</button>
+        {% endif%}
       </section>
       {% endfor %}
     </section>
