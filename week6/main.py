@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse , RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
-from db import check_username_exists , insert_new_user  , check_username , get_all_messages
+from db import check_username_exists , insert_new_user  , check_username , get_all_messages , save_message
 from mysql.connector import cursor
 from typing import Annotated
 
@@ -43,6 +43,7 @@ async def signin(request : Request , username :  str = Form(default = "") , pass
     if user_record:
         request.session["SIGNED-IN"] = True
         request.session["name"] = user_record["name"]
+        request.session["id"] = user_record["id"]
         response = RedirectResponse(url="/member" , status_code= status.HTTP_302_FOUND)
         return response
     
@@ -68,11 +69,17 @@ async def signin_successed(request: Request):
 async def show_error(request : Request , message : str = ""):
     return templates.TemplateResponse("error.html" , {"request" : request , "message" : message})
 
-# @app.post("/createMessage" , response_class= HTMLResponse)
-# async def message_input_output( request : Request , message_content :  str = Form(default = "") ):
-    
-#     response = RedirectResponse(url= "/" , status_code= status.HTTP_302_FOUND)
-#     return response
+@app.post("/createMessage" , response_class= HTMLResponse)
+async def message_input_output( request : Request , message_content :  str = Form(default = "") ):
+    if "SIGNED-IN" in request.session and request.session["SIGNED-IN"]:
+        user_id = request.session.get("id")
+        if message_content:
+            save_message(user_id , message_content)
+            return RedirectResponse(url= "/member" , status_code= status.HTTP_302_FOUND)
+        else:
+            return RedirectResponse(url= "/member" , status_code= status.HTTP_302_FOUND)
+    else:
+        return RedirectResponse(url= "/" , status_code= status.HTTP_302_FOUND)
 
 # @app.get("/square/{cal}" , response_class = HTMLResponse )
 # async def square_math(request : Request , cal : int):

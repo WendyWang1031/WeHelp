@@ -67,6 +67,7 @@ def get_all_messages():
         db.execute("""
                    select member.name , message.content from message
                    join member on  message.member_id = member.id
+                   order by message.time desc
                    """)
         return db.fetchall()
     
@@ -77,6 +78,21 @@ def get_all_messages():
     finally:
         db.close()
         connection.close()
+
+def save_message(member_id , content):
+    connection = get_db_connection()
+    try:
+        db = connection.cursor( dictionary = True )
+        db.execute("insert into message (member_id , content) values (%s , %s )" , (member_id , content)) 
+        connection.commit()
+    
+    except Exception as e:
+        logging.error(f"Error saving message: {e} ")
+
+    finally:
+        db.close()
+        connection.close()
+
 
 if __name__ == "__main__":
     pass
