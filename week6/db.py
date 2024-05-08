@@ -65,7 +65,7 @@ def get_all_messages():
     try:
         db = connection.cursor( dictionary = True )
         db.execute("""
-                   select member.name , message.content from message
+                   select member.name , message.content , message.member_id from message
                    join member on  message.member_id = member.id
                    order by message.time desc
                    """)

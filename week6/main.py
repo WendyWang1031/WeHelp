@@ -58,9 +58,12 @@ async def signin(request : Request , username :  str = Form(default = "") , pass
 async def signin_successed(request: Request):
     if "SIGNED-IN" in request.session and request.session["SIGNED-IN"]:
         user_name = request.session.get("name")
+        user_id = request.session.get("id")
         show_message = get_all_messages()
         return templates.TemplateResponse(
-            request = request , name = "member.html" , context = {"request" : request , "user_name" : user_name , "show_message" : show_message}
+            request = request , 
+            name = "member.html" , 
+            context = {"request" : request , "user_id" : user_id , "user_name" : user_name , "show_message" : show_message}
     )
     else:
         return RedirectResponse(url = "/" , status_code = status.HTTP_302_FOUND)
