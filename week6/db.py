@@ -64,7 +64,10 @@ def get_all_messages():
     connection = get_db_connection()
     try:
         db = connection.cursor( dictionary = True )
-        db.execute(" select member_id , content from message ")
+        db.execute("""
+                   select member.name , message.content from message
+                   join member on  message.member_id = member.id
+                   """)
         return db.fetchall()
     
     except Exception as e:

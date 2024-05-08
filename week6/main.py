@@ -68,11 +68,11 @@ async def signin_successed(request: Request):
 async def show_error(request : Request , message : str = ""):
     return templates.TemplateResponse("error.html" , {"request" : request , "message" : message})
 
-@app.post("/createMessage" , response_class= HTMLResponse)
-async def message_input_output( request : Request , message_content :  str = Form(default = "") ):
+# @app.post("/createMessage" , response_class= HTMLResponse)
+# async def message_input_output( request : Request , message_content :  str = Form(default = "") ):
     
-    response = RedirectResponse(url= "/" , status_code= status.HTTP_302_FOUND)
-    return response
+#     response = RedirectResponse(url= "/" , status_code= status.HTTP_302_FOUND)
+#     return response
 
 # @app.get("/square/{cal}" , response_class = HTMLResponse )
 # async def square_math(request : Request , cal : int):
