@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse , RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
-from db import check_username_exists , insert_new_user  , check_username
+from db import check_username_exists , insert_new_user  , check_username , get_all_messages
 from mysql.connector import cursor
 from typing import Annotated
 
@@ -57,8 +57,9 @@ async def signin(request : Request , username :  str = Form(default = "") , pass
 async def signin_successed(request: Request):
     if "SIGNED-IN" in request.session and request.session["SIGNED-IN"]:
         user_name = request.session.get("name")
+        show_message = get_all_messages()
         return templates.TemplateResponse(
-            request = request , name = "member.html" , context = {"request" : request , "user_name" : user_name}
+            request = request , name = "member.html" , context = {"request" : request , "user_name" : user_name , "show_message" : show_message}
     )
     else:
         return RedirectResponse(url = "/" , status_code = status.HTTP_302_FOUND)
@@ -67,14 +68,15 @@ async def signin_successed(request: Request):
 async def show_error(request : Request , message : str = ""):
     return templates.TemplateResponse("error.html" , {"request" : request , "message" : message})
 
-@app.get("/square/{cal}" , response_class = HTMLResponse )
-async def square_math(request : Request , cal : int):
-    result = cal * cal
-    return templates.TemplateResponse("square.html" , {"request" : request , "result" : result})
-
-# 使用post來渲染數字頁面
-# @app.post("/calculate/")
-# async def calculate_square( number : int = Form(default = 0)):
+@app.post("/createMessage" , response_class= HTMLResponse)
+async def message_input_output( request : Request , message_content :  str = Form(default = "") ):
     
-#     response = RedirectResponse(url=f"/square/{number}" , status_code= status.HTTP_302_FOUND)
-#     return response
+    response = RedirectResponse(url= "/" , status_code= status.HTTP_302_FOUND)
+    return response
+
+# @app.get("/square/{cal}" , response_class = HTMLResponse )
+# async def square_math(request : Request , cal : int):
+#     result = cal * cal
+#     return templates.TemplateResponse("square.html" , {"request" : request , "result" : result})
+
+

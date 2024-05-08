@@ -53,8 +53,23 @@ def check_username(username , password):
         return user_record
     
     except Exception as e:
-        logging.error(f"Database error:{e}")
+        logging.error(f"Database error: {e} ")
         return False
+
+    finally:
+        db.close()
+        connection.close()
+
+def get_all_messages():
+    connection = get_db_connection()
+    try:
+        db = connection.cursor( dictionary = True )
+        db.execute(" select member_id , content from message ")
+        return db.fetchall()
+    
+    except Exception as e:
+        logging.error(f"Error retrieving message: {e} ")
+        return []
 
     finally:
         db.close()
