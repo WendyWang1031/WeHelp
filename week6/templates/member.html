@@ -43,7 +43,7 @@
       {% for message in show_message %}
       <section class="show-message-area">
         <div class="show-message-content">
-          <form action="/deleteMessage" method="post" class="leave-message">
+          <form class="leave-message">
             {{ message.name }}：{{ message.content }}
           </form>
         </div>
