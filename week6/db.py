@@ -2,6 +2,21 @@ from fastapi import Depends
 import mysql.connector
 import logging
 
+# 創建文件處理程序
+file_handler = logging.FileHandler(filename='app.log')
+file_handler.setLevel(logging.INFO)
+
+# 創建控制台處理程序
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+
+# 創建日誌器並添加處理
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+logger.addHandler(file_handler)
+logger.addHandler(console_handler)
+
+
 def get_db_connection():
     try:
         connection = mysql.connector.connect(
@@ -86,7 +101,7 @@ def save_message(member_id , content):
         db = connection.cursor( dictionary = True )
         db.execute("insert into message (member_id , content) values (%s , %s )" , (member_id , content)) 
         connection.commit()
-    
+        logging.info(f"User {member_id} successfully added message:  {content}")
     except Exception as e:
         logging.error(f"Error saving message: {e} ")
 
@@ -117,7 +132,7 @@ def delete_message(message_id):
         db = connection.cursor()
         db.execute("delete from message where id= %s" , (message_id,)) 
         connection.commit()
-    
+        logging.info(f"User successfully delete message id : {message_id}")
     except Exception as e:
         logging.error(f"Error deleting message: {e} ")
 
