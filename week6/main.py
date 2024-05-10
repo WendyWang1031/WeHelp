@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse , RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
-from db import check_username_exists , insert_new_user  , check_username , get_all_messages , save_message , delete_message , is_user_message_owner
+from db import check_username_exists , insert_new_user  , check_username , get_all_messages , insert_message , delete_message , is_user_message_owner
 from mysql.connector import cursor
 from typing import Annotated
 
@@ -79,7 +79,7 @@ async def message_input_output( request : Request , message_content :  str = For
     if "SIGNED-IN" in request.session and request.session["SIGNED-IN"]:
         user_id = request.session.get("id")
         if message_content:
-            save_message(user_id , message_content)
+            insert_message(user_id , message_content)
             return RedirectResponse(url= "/member" , status_code= status.HTTP_302_FOUND)
         else:
             return RedirectResponse(url= "/member" , status_code= status.HTTP_302_FOUND)

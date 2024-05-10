@@ -95,7 +95,7 @@ def get_all_messages():
         db.close()
         connection.close()
 
-def save_message(member_id , content):
+def insert_message(member_id , content):
     connection = get_db_connection()
     try:
         db = connection.cursor( dictionary = True )
