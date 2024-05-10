@@ -65,7 +65,10 @@ def check_username(username , password):
         db = connection.cursor( dictionary = True )
         db.execute("select * from member where username = %s and password = %s " , ( username , password ))
         user_record = db.fetchone()
-        return user_record
+        if user_record:
+            return user_record
+        else:
+            return False
     
     except Exception as e:
         logging.error(f"Database error: {e} ")
@@ -74,6 +77,7 @@ def check_username(username , password):
     finally:
         db.close()
         connection.close()
+    
 
 def get_all_messages():
     connection = get_db_connection()
@@ -102,9 +106,10 @@ def insert_message(member_id , content):
         db.execute("insert into message (member_id , content) values (%s , %s )" , (member_id , content)) 
         connection.commit()
         logging.info(f"User {member_id} successfully added message:  {content}")
+        return True
     except Exception as e:
         logging.error(f"Error saving message: {e} ")
-
+        return False
     finally:
         db.close()
         connection.close()
@@ -132,10 +137,15 @@ def delete_message(message_id):
         db = connection.cursor()
         db.execute("delete from message where id= %s" , (message_id,)) 
         connection.commit()
-        logging.info(f"User successfully delete message id : {message_id}")
+        if db.rowcount>0:
+            logging.info(f"User successfully delete message id : {message_id}")
+            return True
+        else:
+            return False
+        
     except Exception as e:
         logging.error(f"Error deleting message: {e} ")
-
+        return False
     finally:
         db.close()
         connection.close()
