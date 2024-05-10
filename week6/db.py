@@ -38,6 +38,9 @@ def check_username_exists(register_username):
         db = connection.cursor()
         db.execute("select username from member where username = %s" , (register_username,))
         user = db.fetchone()
+    except Exception as e:
+        logging.error(f"Error retrieving username: {e}")
+        return False
     finally:
         db.close()
         connection.close()
