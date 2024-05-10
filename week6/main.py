@@ -28,14 +28,29 @@ async def get_signout(request: Request):
 
 @app.post("/signup" , response_class= HTMLResponse )
 async def get_signup( name :  Annotated[str, Form()] , register_username :  Annotated[str, Form()] , register_password :  Annotated[str, Form()]):
-    if check_username_exists(register_username) :
+    username_exists = check_username_exists(register_username)
+    
+    if username_exists is True :
         error_message = quote("Repeated username")
         response = RedirectResponse(url = f"/error?message={error_message}" , status_code= status.HTTP_302_FOUND)
         return response
+    elif username_exists is False:
+        if insert_new_user(name , register_username , register_password):
+            response = RedirectResponse(url="/" , status_code= status.HTTP_302_FOUND)
+            return response
+        else:
+            error_message = quote("Failed to create user due to a server error")
+            response = RedirectResponse(url = f"/error?message={error_message}" , status_code= status.HTTP_302_FOUND)
+            return response
     else:
-        insert_new_user(name , register_username , register_password)
-        response = RedirectResponse(url="/" , status_code= status.HTTP_302_FOUND)
+        error_message = quote("Failed to perform th check due to a database error")
+        response = RedirectResponse(url = f"/error?message={error_message}" , status_code= status.HTTP_302_FOUND)
         return response
+
+
+
+
+    
 
 @app.post("/signin")
 async def signin(request : Request , username :  str = Form(default = "") , password :  str = Form(default = "")  ):

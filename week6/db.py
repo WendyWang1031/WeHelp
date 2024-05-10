@@ -40,7 +40,7 @@ def check_username_exists(register_username):
         user = db.fetchone()
     except Exception as e:
         logging.error(f"Error retrieving username: {e}")
-        return False
+        return None
     finally:
         db.close()
         connection.close()
