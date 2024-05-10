@@ -53,7 +53,7 @@ async def get_signup( name :  Annotated[str, Form()] , register_username :  Anno
     
 
 @app.post("/signin")
-async def signin(request : Request , username :  str = Form(default = "") , password :  str = Form(default = "")  ):
+async def signin(request : Request , username :  str = Form(...) , password :  str = Form(...)  ):
     user_record = check_username(username , password)
     if user_record:
         request.session["SIGNED-IN"] = True
