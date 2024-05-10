@@ -32,6 +32,7 @@ section.sign-in {
   flex-direction: column;
   align-items: center;
   p.title {
+    text-align: center;
     font-size: 20px;
     margin: 10px;
     font-weight: bold;
@@ -97,18 +98,22 @@ section.sign-in {
     }
   }
 }
-
-form.log-in {
-  section.log-in-area {
-    margin: 15px;
+section.log-in-area {
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p.title {
+    text-align: center;
+    font-size: 20px;
+    margin: 10px;
+    font-weight: bold;
+  }
+  form.log-in {
+    text-align: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    p.title {
-      font-size: 20px;
-      margin: 10px;
-      font-weight: bold;
-    }
+    align-items: flex-start;
 
     div {
       /* margin: 5px; */
@@ -135,24 +140,26 @@ form.log-in {
         }
       }
     }
-  }
-  button.log-in-btn {
-    text-align: center;
-    font-size: 15px;
-    padding: 6px 10px;
-    border: 1px solid black;
-    border-radius: 3px;
-    margin-bottom: 10px;
-  }
 
-  button.log-in-btn:hover {
-    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-    cursor: pointer;
-  }
-  button.log-in-btn:active {
-    color: gray;
-    background-color: rgb(228, 228, 228);
-    cursor: pointer;
+    button.log-in-btn {
+      text-align: center;
+      font-size: 15px;
+      padding: 6px 10px;
+      border: 1px solid black;
+      border-radius: 3px;
+      margin-bottom: 10px;
+      align-self: center;
+    }
+
+    button.log-in-btn:hover {
+      box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+      cursor: pointer;
+    }
+    button.log-in-btn:active {
+      color: gray;
+      background-color: rgb(228, 228, 228);
+      cursor: pointer;
+    }
   }
 }
 
