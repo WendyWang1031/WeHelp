@@ -61,6 +61,27 @@ def get_member_details(username):
         db.close()
         connection.close()
 
+def update_user_name(user_id , new_name):
+    connection = get_db_connection()
+    try:
+        db = connection.cursor()
+        db.execute("select * from member where name = %s " , ( user_id ,))
+        user_record = db.fetchone()
+        if user_record:
+            db.execute("update member SET name = %s  where id = %s " , ( new_name , user_id))
+            connection.commit()
+            return True
+        else:
+            return False
+    
+    except Exception as e:
+        logging.error(f"Database error: {e} ")
+        return False
+
+    finally:
+        db.close()
+        connection.close()
+    
 
 def insert_new_user(name , register_username , register_password):
     connection = get_db_connection()
@@ -77,7 +98,7 @@ def insert_new_user(name , register_username , register_password):
         connection.close()
     return True
 
-def check_username(username , password):
+def check_username_password(username , password):
     connection = get_db_connection()
     try:
         db = connection.cursor( dictionary = True )
