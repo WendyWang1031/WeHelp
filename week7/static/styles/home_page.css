@@ -217,6 +217,102 @@ section.main-message {
     }
   }
 }
+section.demand-member {
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p.title {
+    font-size: 20px;
+    margin: 10px;
+    font-weight: bold;
+  }
+  form.require-member {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    div.demand-member-content {
+      display: inline-flex;
+      margin-bottom: 10px;
+      p {
+        margin-right: 5px;
+      }
+      input {
+        border: 1px solid rgb(0, 0, 0);
+        border-radius: 3px;
+      }
+    }
+
+    button.submit-message-btn {
+      text-align: center;
+      font-size: 15px;
+      padding: 6px 10px;
+      border: 1px solid black;
+      border-radius: 3px;
+      margin-bottom: 10px;
+      align-self: center;
+    }
+
+    button.submit-message-btn:hover {
+      box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+      cursor: pointer;
+    }
+    button.submit-message-btn:active {
+      color: gray;
+      background-color: rgb(228, 228, 228);
+      cursor: pointer;
+    }
+  }
+}
+section.update-username {
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p.title {
+    font-size: 20px;
+    margin: 10px;
+    font-weight: bold;
+  }
+  form.update-member {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    div.update-member-content {
+      display: inline-flex;
+      margin-bottom: 10px;
+
+      input {
+        border: 1px solid rgb(0, 0, 0);
+        border-radius: 3px;
+      }
+    }
+
+    button.submit-message-btn {
+      text-align: center;
+      font-size: 15px;
+      padding: 6px 10px;
+      border: 1px solid black;
+      border-radius: 3px;
+      margin-bottom: 10px;
+      align-self: center;
+    }
+
+    button.submit-message-btn:hover {
+      box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+      cursor: pointer;
+    }
+    button.submit-message-btn:active {
+      color: gray;
+      background-color: rgb(228, 228, 228);
+      cursor: pointer;
+    }
+  }
+}
 .for-center {
   margin: 15px;
   display: flex;
