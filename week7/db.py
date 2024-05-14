@@ -47,7 +47,7 @@ def check_username_exists(register_username):
     
     return user is not None
 
-def get_mamber_details(username):
+def get_member_details(username):
     connection = get_db_connection()
     try:
         db = connection.cursor()

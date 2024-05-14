@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse , RedirectResponse , JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
-from db import check_username_exists , insert_new_user  , check_username , get_all_messages , insert_message , delete_message , is_user_message_owner , get_mamber_details
+from db import check_username_exists , insert_new_user  , check_username , get_all_messages , insert_message , delete_message , is_user_message_owner , get_member_details
 from mysql.connector import cursor
 from typing import Annotated , Optional
 
@@ -83,7 +83,7 @@ async def signin_successed(request: Request):
 async def demand_username(request: Request , username : Optional[str] = None):
     if "SIGNED-IN" in request.session and request.session["SIGNED-IN"]:
         if username:
-            member_data = get_mamber_details(username)
+            member_data = get_member_details(username)
             if member_data:
                 return {"data" : dict (zip(["id" , "name" , "username"], member_data))}
             else:
