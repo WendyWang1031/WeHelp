@@ -1,8 +1,10 @@
 const messageSubmitBtn = document.querySelector(".submit-message-btn");
 const deleteMeassgeBtn = document.querySelector(".delete-message-btn");
 const btnContainer = document.querySelector(".for-center");
+const searchMemberBtn = document.querySelector(".search-btn");
 
 messageSubmitBtn.addEventListener("click", checkMessage);
+searchMemberBtn.addEventListener("click", checkMember);
 
 if (btnContainer) {
   btnContainer.addEventListener("click", function (event) {
@@ -46,4 +48,30 @@ function checkDeleteMessage(event) {
   } else {
     console.log("Deletion cancelled");
   }
+}
+
+function checkMember(event) {
+  event.preventDefault();
+  const username = document.getElementById("search_username").value;
+  fetch(`http://127.0.0.1:8000/api/member?username=${username}`)
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Network response was not ok.");
+      }
+    })
+    .then((data) => {
+      if (data && data.data) {
+        console.log(data);
+        document.getElementById(
+          "result"
+        ).innerText = `${data.data.name}(${data.data.username})`;
+      } else {
+        document.getElementById("result").innerText = "No Data";
+      }
+    })
+    .catch((error) => {
+      console.log(`Error: ${error}`);
+    });
 }
