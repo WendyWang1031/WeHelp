@@ -78,12 +78,24 @@
     </section>
 
     <hr />
+    <div
+      id="user-info"
+      data-user-id="{{ user_id }}"
+      style="display: none"
+    ></div>
+
     <section class="for-center">
       {% for message in show_message %}
       <section class="show-message-area">
         <div class="show-message-content">
           <form class="leave-message">
-            {{ message.name }}：{{ message.content }}
+            <span
+              class="username-display"
+              data-user-id="{{ message.member_id}}"
+            >
+              {{ message.name }}
+            </span>
+            ：{{ message.content }}
           </form>
         </div>
         {% if message.member_id == user_id %}

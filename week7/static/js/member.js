@@ -2,11 +2,9 @@ const messageSubmitBtn = document.querySelector(".submit-message-btn");
 const deleteMeassgeBtn = document.querySelector(".delete-message-btn");
 const btnContainer = document.querySelector(".for-center");
 const searchMemberBtn = document.querySelector(".search-btn");
-const updateNameBtn = document.querySelector(".update-name-btn");
 
 messageSubmitBtn.addEventListener("click", checkMessage);
 searchMemberBtn.addEventListener("click", checkMember);
-updateNameBtn.addEventListener("click", updateName);
 
 if (btnContainer) {
   btnContainer.addEventListener("click", function (event) {
@@ -78,9 +76,38 @@ function checkMember(event) {
     });
 }
 
-function updateName(event) {
-  event.preventDefault();
-  const newName = document.getElementById("change_name").value;
+document.addEventListener("DOMContentLoaded", function () {
+  const userInfoElement = document.getElementById("user-info");
+  const userID = userInfoElement.dataset.userId;
+  console.log("User ID from dataset:", userID);
+
+  const updateButton = document.querySelector(".update-name-btn");
+  if (updateButton) {
+    updateButton.addEventListener("click", function (event) {
+      event.preventDefault();
+      const newName = document.getElementById("change_name").value;
+      updateAllUsernames(newName, userID);
+      updateName(newName, userID);
+    });
+  }
+});
+
+function updateAllUsernames(newName, userID) {
+  const usernameDisplays = document.querySelectorAll(".username-display");
+  if (userID) {
+    const userIDStr = userID.toString();
+    usernameDisplays.forEach(function (display) {
+      if (display.dataset.userId === userIDStr) {
+        display.textContent = newName;
+      }
+    });
+  } else {
+    console.error("No user ID provided or user ID is undefined.");
+  }
+}
+
+function updateName(newName, userID) {
+  console.log("User ID from dataset:", userID);
   fetch(`http://127.0.0.1:8000/api/member`, {
     method: "PATCH",
     headers: {
@@ -97,10 +124,10 @@ function updateName(event) {
     })
     .then((data) => {
       if (data.ok) {
+        console.log(data);
         document.querySelector(
           ".title"
         ).innerText = `嗨！${newName}，歡迎登入系統`;
-        console.log(data);
         document.getElementById("update-result").innerText = "更新成功";
       } else {
         document.getElementById("update-result").innerText = "更新失敗";
