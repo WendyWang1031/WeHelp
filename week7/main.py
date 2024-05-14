@@ -7,6 +7,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from db import check_username_exists , insert_new_user  , check_username_password , get_all_messages , insert_message , delete_message , is_user_message_owner , get_member_details, update_user_name
 from mysql.connector import cursor
 from typing import Annotated , Optional
+import json
 
 app = FastAPI()
 app.mount("/static" , StaticFiles ( directory = "static" ) , name = "static")
@@ -124,16 +125,21 @@ async def message_delete( request : Request , message_id :  int = Form(...)):
         return RedirectResponse(url= "/" , status_code= status.HTTP_302_FOUND)
 
 @app.patch("/api/member" , response_class = JSONResponse )
-async def change_username(request: Request , request_name : Optional[str] = None):
+async def change_username(request: Request):
     if "SIGNED-IN" in request.session and request.session["SIGNED-IN"]:
-        user_id = request.session.get("id")
-        update_success = update_user_name(user_id , request_name)
-        if update_success:
-            return {"name":request_name , "ok":True}
-        else:
-            return {"error": True}
+        json_body = await request.json()
+        print(json_body)
+        name = json_body.get("name")
+        if name and isinstance(name, str):
+            user_id = request.session.get("id")
+            update_success = update_user_name(user_id , name)
+            if update_success:
+                return {"ok":True}
+            else:
+                return {"error": True}
+        
     else:
-        return RedirectResponse(url = "/" , status_code = status.HTTP_302_FOUND)    
+        return RedirectResponse(url = "/" , status_code = status.HTTP_302_FOUND)   
 
 # @app.get("/square/{cal}" , response_class = HTMLResponse )
 # async def square_math(request : Request , cal : int):

@@ -65,7 +65,7 @@ def update_user_name(user_id , new_name):
     connection = get_db_connection()
     try:
         db = connection.cursor()
-        db.execute("select * from member where name = %s " , ( user_id ,))
+        db.execute("select * from member where id = %s " , ( user_id ,))
         user_record = db.fetchone()
         if user_record:
             db.execute("update member SET name = %s  where id = %s " , ( new_name , user_id))
