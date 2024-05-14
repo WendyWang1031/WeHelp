@@ -292,7 +292,7 @@ section.update-username {
       }
     }
 
-    button.submit-message-btn {
+    button.update-name-btn {
       text-align: center;
       font-size: 15px;
       padding: 6px 10px;
@@ -302,11 +302,11 @@ section.update-username {
       align-self: center;
     }
 
-    button.submit-message-btn:hover {
+    button.update-name-btn:hover {
       box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.24);
       cursor: pointer;
     }
-    button.submit-message-btn:active {
+    button.update-name-btn:active {
       color: gray;
       background-color: rgb(228, 228, 228);
       cursor: pointer;

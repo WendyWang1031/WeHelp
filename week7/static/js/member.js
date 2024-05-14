@@ -2,9 +2,11 @@ const messageSubmitBtn = document.querySelector(".submit-message-btn");
 const deleteMeassgeBtn = document.querySelector(".delete-message-btn");
 const btnContainer = document.querySelector(".for-center");
 const searchMemberBtn = document.querySelector(".search-btn");
+const updateNameBtn = document.querySelector(".update-name-btn");
 
 messageSubmitBtn.addEventListener("click", checkMessage);
 searchMemberBtn.addEventListener("click", checkMember);
+updateNameBtn.addEventListener("click", updateName);
 
 if (btnContainer) {
   btnContainer.addEventListener("click", function (event) {
@@ -65,13 +67,47 @@ function checkMember(event) {
       if (data && data.data) {
         console.log(data);
         document.getElementById(
-          "result"
+          "search-result"
         ).innerText = `${data.data.name}(${data.data.username})`;
       } else {
-        document.getElementById("result").innerText = "No Data";
+        document.getElementById("search-result").innerText = "無此會員";
       }
     })
     .catch((error) => {
       console.log(`Error: ${error}`);
+    });
+}
+
+function updateName(event) {
+  event.preventDefault();
+  const newName = document.getElementById("change_name").value;
+  fetch(`http://127.0.0.1:8000/api/member`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name: newName }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Network response was not ok.");
+      }
+    })
+    .then((data) => {
+      if (data.ok) {
+        document.querySelector(
+          ".title"
+        ).innerText = `嗨！${newName}，歡迎登入系統`;
+        console.log(data);
+        document.getElementById("update-result").innerText = "更新成功";
+      } else {
+        document.getElementById("update-result").innerText = "更新失敗";
+      }
+    })
+    .catch((error) => {
+      console.log(`Error: ${error}`);
+      document.getElementById("update-result").innerText = "更新失敗";
     });
 }

@@ -46,32 +46,33 @@
             <input
               type="text"
               id="search_username"
-              name="username"
+              name="search_username"
               placeholder=" 請輸入username"
             />
           </div>
 
           <button class="search-btn" type="submit">查詢</button>
-          <div id="result"></div>
+          <div id="search-result"></div>
         </section>
       </form>
     </section>
     <hr />
 
     <section class="update-username">
-      <form action="" method="" class="update-member">
+      <form action="" method="get" class="update-member">
         <section class="update-member-area">
           <p class="title">更新我的名字</p>
           <div class="update-member-content">
             <input
               type="text"
-              id="change_username"
-              name="change_username"
-              placeholder=" 輸入新的姓名"
+              id="change_name"
+              name="name"
+              placeholder=" 輸入新的名字"
             />
           </div>
 
-          <button class="submit-message-btn">更新</button>
+          <button class="update-name-btn">更新</button>
+          <div id="update-result"></div>
         </section>
       </form>
     </section>
