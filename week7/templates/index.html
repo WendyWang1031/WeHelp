@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="zh-Hant" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Member Login System</title>
+    <link rel="stylesheet" href="/static/styles/home_page.css" />
+  </head>
+  <body>
+    <section class="welcome-area">
+      <div class="welcome-text">
+        <h1>歡迎光臨，請註冊登入系統</h1>
+      </div>
+    </section>
+
+    <section class="sign-in">
+      <p class="title">註冊帳號</p>
+
+      <form action="/signup" method="post" class="input-area">
+        <div class="name">
+          <p>姓名</p>
+          <input type="text" id="name" name="name" placeholder=" 請輸入姓名" />
+        </div>
+
+        <div class="account">
+          <p>帳號</p>
+          <input
+            type="text"
+            id="register-username"
+            name="register_username"
+            placeholder=" 請輸入帳號"
+          />
+        </div>
+        <div class="password">
+          <p>密碼</p>
+          <input
+            type="password"
+            id="register-password"
+            name="register_password"
+            placeholder=" 請輸入密碼"
+          />
+        </div>
+
+        <button class="submit-btn">註冊</button>
+      </form>
+    </section>
+    <hr />
+    <section class="log-in-area">
+      <p class="title">登入系統</p>
+      <form action="/signin" method="post" class="log-in">
+        <div class="username-area">
+          <p>帳號</p>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder=" 請輸入帳號"
+          />
+        </div>
+        <div class="password-area">
+          <p>密碼</p>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder=" 請輸入密碼"
+          />
+        </div>
+        <button class="log-in-btn">登入</button>
+      </form>
+    </section>
+  </body>
+  <script src="/static/js/app.js"></script>
+</html>
