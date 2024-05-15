@@ -2,6 +2,9 @@ const messageSubmitBtn = document.querySelector(".submit-message-btn");
 const deleteMeassgeBtn = document.querySelector(".delete-message-btn");
 const btnContainer = document.querySelector(".for-center");
 const searchMemberBtn = document.querySelector(".search-btn");
+const searchResult = document.getElementById("search-result");
+const welcomeTitle = document.querySelector(".title");
+const updateNameResult = document.getElementById("update-result");
 
 messageSubmitBtn.addEventListener("click", checkMessage);
 searchMemberBtn.addEventListener("click", checkMember);
@@ -64,11 +67,9 @@ function checkMember(event) {
     .then((data) => {
       if (data && data.data) {
         console.log(data);
-        document.getElementById(
-          "search-result"
-        ).innerText = `${data.data.name}(${data.data.username})`;
+        searchResult.innerText = `${data.data.name}(${data.data.username})`;
       } else {
-        document.getElementById("search-result").innerText = "無此會員";
+        searchResult.innerText = "無此會員";
       }
     })
     .catch((error) => {
@@ -79,15 +80,20 @@ function checkMember(event) {
 document.addEventListener("DOMContentLoaded", function () {
   const userInfoElement = document.getElementById("user-info");
   const userID = userInfoElement.dataset.userId;
+  const updateButton = document.querySelector(".update-name-btn");
   console.log("User ID from dataset:", userID);
 
-  const updateButton = document.querySelector(".update-name-btn");
   if (updateButton) {
     updateButton.addEventListener("click", function (event) {
       event.preventDefault();
       const newName = document.getElementById("change_name").value;
-      updateAllUsernames(newName, userID);
-      updateName(newName, userID);
+      if (newName) {
+        updateAllUsernames(newName, userID);
+        updateName(newName, userID);
+      } else {
+        alert("Please enter a valid name.");
+        updateNameResult.innerText = "請輸入可使用的名字";
+      }
     });
   }
 });
@@ -125,16 +131,14 @@ function updateName(newName, userID) {
     .then((data) => {
       if (data.ok) {
         console.log(data);
-        document.querySelector(
-          ".title"
-        ).innerText = `嗨！${newName}，歡迎登入系統`;
-        document.getElementById("update-result").innerText = "更新成功";
+        welcomeTitle.innerText = `嗨！${newName}，歡迎登入系統`;
+        updateNameResult.innerText = "更新成功";
       } else {
-        document.getElementById("update-result").innerText = "更新失敗";
+        updateNameResult.innerText = "更新失敗";
       }
     })
     .catch((error) => {
       console.log(`Error: ${error}`);
-      document.getElementById("update-result").innerText = "更新失敗";
+      updateNameResult.innerText = "更新失敗";
     });
 }
