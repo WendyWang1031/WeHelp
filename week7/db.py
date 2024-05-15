@@ -2,15 +2,12 @@ from fastapi import Depends
 import mysql.connector
 import logging
 
-# 創建文件處理程序
 file_handler = logging.FileHandler(filename='app.log')
 file_handler.setLevel(logging.INFO)
 
-# 創建控制台處理程序
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.INFO)
 
-# 創建日誌器並添加處理
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 logger.addHandler(file_handler)
