@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse , RedirectResponse , JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.sessions import SessionMiddleware
-from db import check_username_exists , insert_new_user  , check_username_password , get_all_messages , insert_message , delete_message , is_user_message_owner , get_member_details, update_user_name
+from db import check_username_exists , insert_new_user  , check_username_password , get_user_by_username_password , get_all_messages , insert_message , delete_message , is_user_message_owner , get_member_details, update_user_name
 from mysql.connector import cursor
 from typing import Annotated , Optional
 import json
@@ -49,13 +49,12 @@ async def demand_username(request: Request , username : Optional[str] = None):
             if member_data:
                 return {"data" : dict (zip(["id" , "name" , "username"], member_data))}
             else:
-                return {"data": None}
+                return {"data": None , "error": "Member not found" , "code":404}
         else:
-            return {"data": None}
-        
-
+            return {"data": None , "error": "Username parameter is missing" , "code":400}
     else:
-        return RedirectResponse(url = "/" , status_code = status.HTTP_302_FOUND)
+        return {"data": None , "error": "User is not signed in" , "code":401}
+        
 
 @app.get("/error" , response_class = HTMLResponse )
 async def show_error(request : Request , message : str = ""):
@@ -85,13 +84,18 @@ async def get_signup( name :  Annotated[str, Form()] , register_username :  Anno
 
 @app.post("/signin")
 async def signin(request : Request , username :  str = Form(...) , password :  str = Form(...)  ):
-    user_record = check_username_password(username , password)
-    if user_record:
-        request.session["SIGNED-IN"] = True
-        request.session["name"] = user_record["name"]
-        request.session["id"] = user_record["id"]
-        response = RedirectResponse(url="/member" , status_code= status.HTTP_302_FOUND)
-        return response
+    if check_username_password(username , password):
+        user_record = get_user_by_username_password(username , password)
+        if user_record:
+            request.session["SIGNED-IN"] = True
+            request.session["name"] = user_record["name"]
+            request.session["id"] = user_record["id"]
+            response = RedirectResponse(url="/member" , status_code= status.HTTP_302_FOUND)
+            return response
+        else:
+            error_message = "Failed to retrieve user details "
+            response = RedirectResponse(url = f"/error?message={quote(error_message)}" , status_code = status.HTTP_302_FOUND)
+            return response
     
     else:
         error_message = "Username or password is not correct"
@@ -103,8 +107,11 @@ async def message_input_output( request : Request , message_content :  str = For
     if "SIGNED-IN" in request.session and request.session["SIGNED-IN"]:
         user_id = request.session.get("id")
         if message_content:
-            insert_message(user_id , message_content)
-            return RedirectResponse(url= "/member" , status_code= status.HTTP_302_FOUND)
+            success =  insert_message(user_id , message_content)
+            if success:
+                return RedirectResponse(url= "/member" , status_code= status.HTTP_302_FOUND)
+            else:
+                return RedirectResponse(url= "/member" , status_code= status.HTTP_302_FOUND)
         else:
             return RedirectResponse(url= "/member" , status_code= status.HTTP_302_FOUND)
     else:
@@ -116,8 +123,11 @@ async def message_delete( request : Request , message_id :  int = Form(...)):
     if "SIGNED-IN" in request.session and request.session["SIGNED-IN"]:
         user_id = request.session.get("id")
         if is_user_message_owner(user_id , message_id):
-            delete_message(message_id)
-            return RedirectResponse(url= "/member" , status_code= status.HTTP_302_FOUND)
+            success = delete_message(message_id)
+            if success:
+                return RedirectResponse(url= "/member" , status_code= status.HTTP_302_FOUND)
+            else:
+                return RedirectResponse(url= "/member" , status_code= status.HTTP_302_FOUND)
         else:
             return RedirectResponse(url= "/member" , status_code= status.HTTP_403_FORBIDDEN)
     
@@ -140,10 +150,22 @@ async def change_username(request: Request):
         
     else:
         return RedirectResponse(url = "/" , status_code = status.HTTP_302_FOUND)   
+    
 
-# @app.get("/square/{cal}" , response_class = HTMLResponse )
-# async def square_math(request : Request , cal : int):
-#     result = cal * cal
-#     return templates.TemplateResponse("square.html" , {"request" : request , "result" : result})
-
-
+async def change_username(request: Request):
+    if "SIGNED-IN" in request.session and request.session["SIGNED-IN"]:
+        json_body = await request.json()
+        print(json_body)
+        name = json_body.get("name")
+        if name and isinstance(name, str):
+            user_id = request.session.get("id")
+            update_success = update_user_name(user_id , name)
+            if update_success:
+                return {"ok":True}
+            else:
+                return {"error": True ,  "errorMessage": "Updated failed. User not found." , "code":404}
+        else:
+            return {"error": True ,  "errorMessage": "Name parameter is missing or invalid." , "code":400}
+        
+    else:
+        return  {"error": True ,  "errorMessage": "User is not signed in" , "code":401}

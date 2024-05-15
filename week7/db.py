@@ -65,11 +65,9 @@ def update_user_name(user_id , new_name):
     connection = get_db_connection()
     try:
         db = connection.cursor()
-        db.execute("select * from member where id = %s " , ( user_id ,))
-        user_record = db.fetchone()
-        if user_record:
-            db.execute("update member SET name = %s  where id = %s " , ( new_name , user_id))
-            connection.commit()
+        db.execute("update member SET name = %s  where id = %s " , ( new_name , user_id))
+        connection.commit()
+        if db.rowcount >0:
             return True
         else:
             return False
@@ -89,7 +87,11 @@ def insert_new_user(name , register_username , register_password):
         db = connection.cursor()
         db.execute("insert into member (name , username , password) values (%s , %s , %s)" , (name , register_username , register_password))
         connection.commit()
-        logging.info("User successfully added: %s" , register_username)
+        if db.rowcount>0:
+            logging.info("User successfully added: %s" , register_username)
+            return True
+        else:
+            return False
     except Exception as e:
         logging.error("Failed to add user: %s" , e)
         return False
@@ -105,9 +107,24 @@ def check_username_password(username , password):
         db.execute("select * from member where username = %s and password = %s " , ( username , password ))
         user_record = db.fetchone()
         if user_record:
-            return user_record
+            return True
         else:
             return False
+    
+    except Exception as e:
+        logging.error(f"Database error: {e} ")
+        return False
+
+    finally:
+        db.close()
+        connection.close()
+
+def get_user_by_username_password(username , password):
+    connection = get_db_connection()
+    try:
+        db = connection.cursor( dictionary = True )
+        db.execute("select * from member where username = %s and password = %s " , ( username , password ))
+        return db.fetchone()
     
     except Exception as e:
         logging.error(f"Database error: {e} ")
@@ -144,8 +161,9 @@ def insert_message(member_id , content):
         db = connection.cursor( dictionary = True )
         db.execute("insert into message (member_id , content) values (%s , %s )" , (member_id , content)) 
         connection.commit()
-        logging.info(f"User {member_id} successfully added message:  {content}")
-        return True
+        if db.rowcount>0:
+            logging.info(f"User {member_id} successfully added message:  {content}")
+            return True
     except Exception as e:
         logging.error(f"Error saving message: {e} ")
         return False
@@ -159,7 +177,10 @@ def is_user_message_owner(user_id , message_id):
         db = connection.cursor( dictionary = True )
         db.execute("select id from message where member_id= %s and id= %s" , (user_id , message_id)) 
         message = db.fetchone()
-        return bool(message)
+        if message:
+            return True
+        else:
+            return False
     
     except Exception as e:
         logging.error(f"Error verifing message owner: {e} ")
