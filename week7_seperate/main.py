@@ -56,20 +56,43 @@ async def get_user_info(request: Request):
 
 
 
+
+
 @app.get("/api/member_username" , response_class = JSONResponse )
 async def demand_username(request: Request , username : Optional[str] = None):
-    if "SIGNED-IN" in request.session and request.session["SIGNED-IN"]:
-        if username:
-            member_data = get_member_details(username)
-            if member_data:
-                return {"data" : dict (zip(["id" , "name" , "username"], member_data))}
-            else:
-                return {"data": None , "error": "Member not found" , "code":404}
-        else:
-            return {"data": None , "error": "Username parameter is missing" , "code":400}
+    if "SIGNED-IN" not in request.session or not request.session["SIGNED-IN"]:
+        response = JSONResponse(
+            status_code = status.HTTP_401_UNAUTHORIZED,
+            content = {"success":False ,"data": None , "message": "User is not signed in"}
+        )
+        return response
+    if not username:
+        response = JSONResponse(
+            status_code = status.HTTP_400_BAD_REQUEST,
+            content = {"success":False ,"data": None , "message": "Username parameter is missing"}
+        )
+        return response
+
+    member_data = get_member_details(username)
+    if member_data:
+        data_dict = dict (zip(["id" , "name" , "username"], member_data ))
+        response = JSONResponse(
+        status_code = status.HTTP_200_OK,
+        content = {"success":True ,"data" : data_dict}
+    )
+        return response
     else:
-        return {"data": None , "error": "User is not signed in" , "code":401}
+        response = JSONResponse(
+        status_code = status.HTTP_404_NOT_FOUND,
+        content = {"success":False ,"data": None, "message": "Member not found"}
+    )
+        return response
+    
+    
+    
         
+
+
 @app.patch("/api/member" , response_class = JSONResponse )
 async def change_username(request: Request):
     if "SIGNED-IN" in request.session and request.session["SIGNED-IN"]:
@@ -80,14 +103,32 @@ async def change_username(request: Request):
             user_id = request.session.get("id")
             update_success = update_user_name(user_id , name)
             if update_success:
-                return {"ok":True}
+                response = JSONResponse(
+                status_code=status.HTTP_200_OK,
+                content={"success":True,"message":"Updated sucessful!"} 
+                )
+                return response
             else:
-                return {"error": True ,  "errorMessage": "Updated failed. User not found." , "code":404}
+                response = JSONResponse(
+                status_code=status.HTTP_404_NOT_FOUND,
+                content={"success":False , "message":"Updated failed. User not found."}
+                )
+                return response
         else:
-            return {"error": True ,  "errorMessage": "Name parameter is missing or invalid." , "code":400}
+            response = JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={"success":False , "message":"Name parameter is missing or invalid."}
+                )
+            return response
         
     else:
-        return  {"error": True ,  "errorMessage": "User is not signed in" , "code":401}
+        response = JSONResponse(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                content={"success":False , "message":"User is not signed in."}
+                )
+        return  response
+
+
 
 @app.get("/member" , response_class = HTMLResponse )
 async def signin_successed(request: Request):
@@ -153,7 +194,6 @@ async def signup(request : Request):
         return response
 
 
-
 @app.post("/api/login", response_class= JSONResponse)
 async def login(request : Request):
     json_body = await request.json()
@@ -166,14 +206,24 @@ async def login(request : Request):
             request.session["SIGNED-IN"] = True
             request.session["name"] = user_record["name"]
             request.session["id"] = user_record["id"]
-            response = JSONResponse(content={"success":True , "redirect":"/member"} , status_code=status.HTTP_200_OK)
+            response = JSONResponse(
+                status_code=status.HTTP_200_OK,
+                content={"success":True , "redirect":"/member"} 
+                )
             return response
         else:
-            response = JSONResponse(content={"success":False , "message":"Failed to retrieve user details"} , status_code=status.HTTP_401_UNAUTHORIZED)
+            response = JSONResponse(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                content={"success":False , "message":"Failed to retrieve user details"}
+                )
+                
             return response
     
     else:
-        response = JSONResponse(content={"success":False , "message":"Username or password is not correct"} , status_code=status.HTTP_401_UNAUTHORIZED)
+        response = JSONResponse(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            content={"success":False , "message":"Username or password is not correct"}
+            )
         return response
 
 @app.post("/api/message" , response_class= JSONResponse)
@@ -183,13 +233,29 @@ async def message_input_output( request : Request , message_content :  str = For
         if message_content:
             success =  insert_message(user_id , message_content)
             if success:
-                return JSONResponse(status_code= status.HTTP_201_CREATED , content={"message" : "Message added successfully"})
+                response = JSONResponse(
+                    status_code= status.HTTP_201_CREATED , 
+                    content={"success":True , "message" : "Message added successfully"}
+                    )
+                return response
             else:
-                return JSONResponse( status_code= status.HTTP_400_BAD_REQUEST , content={"error":"Failed to add message"})
+                response = JSONResponse( 
+                    status_code= status.HTTP_400_BAD_REQUEST , 
+                    content={"success":False , "message":"Failed to add message"}
+                    )
+                return response
         else:
-            return JSONResponse( status_code= status.HTTP_400_BAD_REQUEST , content={"error" : "No message content provided"})
+            response = JSONResponse( 
+                status_code= status.HTTP_400_BAD_REQUEST , 
+                content={"success":False , "message" : "No message content provided"}
+                )
+            return response
     else:
-        return JSONResponse( status_code= status.HTTP_401_UNAUTHORIZED , content={"error":"User not signed in"})
+        response = JSONResponse( 
+            status_code= status.HTTP_401_UNAUTHORIZED , 
+            content={"success":False , "message":"User not signed in"}
+            )
+        return response
 
 @app.post("/deleteMessage" , response_class= HTMLResponse)
 async def message_delete( request : Request , message_id :  int = Form(...)):

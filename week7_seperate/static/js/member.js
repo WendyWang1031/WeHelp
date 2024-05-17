@@ -126,17 +126,20 @@ function checkDeleteMessage(event) {
 function checkMember(event) {
   event.preventDefault();
   const username = document.getElementById("search_username").value;
-  fetch(`http://127.0.0.1:8000//api/member_username?username=${username}`)
+  fetch(`http://127.0.0.1:8000/api/member_username?username=${username}`)
     .then((response) => {
       if (response.ok) {
         return response.json();
       } else {
-        throw new Error("Network response was not ok.");
+        return response.json().then((data) => {
+          throw new Error(data.message || "Unknown Error");
+        });
       }
     })
     .then((data) => {
       if (data && data.data) {
         console.log(data);
+        console.log("Member founded");
         searchResult.innerText = `${data.data.name}(${data.data.username})`;
       } else {
         searchResult.innerText = "無此會員";
@@ -144,6 +147,7 @@ function checkMember(event) {
     })
     .catch((error) => {
       console.log(`Error: ${error}`);
+      searchResult.innerText = error.message;
     });
 }
 
@@ -195,11 +199,13 @@ function updateName(newName, userID) {
       if (response.ok) {
         return response.json();
       } else {
-        throw new Error("Network response was not ok.");
+        return response.json().then((data) => {
+          throw new Error(data.message || "Unknown Error");
+        });
       }
     })
     .then((data) => {
-      if (data.ok) {
+      if (data.success) {
         console.log(data);
         welcomeTitle.innerText = `嗨！${newName}，歡迎登入系統`;
         updateNameResult.innerText = "更新成功";
@@ -209,6 +215,6 @@ function updateName(newName, userID) {
     })
     .catch((error) => {
       console.log(`Error: ${error}`);
-      updateNameResult.innerText = "更新失敗";
+      updateNameResult.innerText = error.message;
     });
 }
