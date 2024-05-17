@@ -10,10 +10,11 @@ const messageContainer = document.querySelector(".for-center");
 const messageElement = document.createElement("section");
 const formElement = document.createElement("form");
 
-messageSubmitBtn.addEventListener("click", checMessage);
+messageSubmitBtn.addEventListener("click", checkMessage);
 searchMemberBtn.addEventListener("click", checkMember);
 
 document.addEventListener("DOMContentLoaded", getUserInfo);
+document.addEventListener("DOMContentLoaded", showMessage);
 
 if (btnContainer) {
   btnContainer.addEventListener("click", function (event) {
@@ -41,7 +42,7 @@ function getUserInfo() {
     });
 }
 
-function checMessage(event) {
+function checkMessage(event) {
   const messageInput = document.querySelector("#message_content").value;
   if (messageInput === "") {
     alert("Please enter your message content.");
@@ -51,6 +52,55 @@ function checMessage(event) {
     console.log("good job! Message field are filled!");
     insertMessage();
   }
+}
+
+function showMessage() {
+  fetch(`http://127.0.0.1:8000/api/member`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        return response.json().then((data) => {
+          throw new Error(data.message || "Unknown Error");
+        });
+      }
+    })
+    .then((data) => {
+      if (data.success) {
+        console.log(data);
+        messageContainer.innerHTML = "";
+        data.message.forEach((message) => {
+          let messageElement = document.createElement("div");
+          messageElement.className = "show-message-area";
+          let messageContent = document.createElement("div");
+          messageContent.className = "show-message-content";
+          let messageForm = document.createElement("form");
+          messageForm.className = "leave-message";
+          messageForm.innerHTML = `
+          
+            <span class="username-display" data-user-id="${message.message_id}">
+            ${message.name}
+            </span>：${message.content}
+            <input type="hidden" name="message_id" value="${message.message_id}">
+            <button type="submit" class="delete-message-btn">X</button>
+            
+          `;
+
+          messageElement.appendChild(messageForm);
+          messageContainer.appendChild(messageElement);
+        });
+      } else {
+        messageContainer.innerText = "無留言顯示";
+      }
+    })
+    .catch((error) => {
+      console.log(`Error: ${error}`);
+    });
 }
 
 function insertMessage() {

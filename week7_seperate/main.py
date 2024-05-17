@@ -38,11 +38,15 @@ async def get_member_data(request: Request):
         user_name = request.session.get("name")
         user_id = request.session.get("id")
         messages = get_all_messages()
-        return JSONResponse(status_code=200,content={
+        response = JSONResponse(
+            status_code = status.HTTP_200_OK,
+            content={
+            "success":True,
             "user_id":user_id,
             "user_name":user_name,
-            "messages":messages
+            "message":messages
         })
+        return response
     else:
         return RedirectResponse(url = "/" , status_code = status.HTTP_302_FOUND)
 
