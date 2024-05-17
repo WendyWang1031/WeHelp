@@ -50,7 +50,7 @@ function checkMessage(event) {
     return;
   } else {
     console.log("good job! Message field are filled!");
-    insertMessage();
+    insertMessage(messageInput);
   }
 }
 
@@ -72,7 +72,7 @@ function showMessage() {
     })
     .then((data) => {
       if (data.success) {
-        console.log(data);
+        // console.log(data);
         messageContainer.innerHTML = "";
         data.message.forEach((message) => {
           let messageElement = document.createElement("div");
@@ -103,44 +103,47 @@ function showMessage() {
     });
 }
 
-function insertMessage() {
+function insertMessage(messageContent) {
   fetch(`http://127.0.0.1:8000/api/message`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ message_content: messageContent }),
+    body: JSON.stringify({ content: messageContent }),
   })
     .then((response) => {
       if (response.ok) {
         return response.json();
       } else {
-        throw new Error("Network response was not ok.");
+        return response.json().then((data) => {
+          throw new Error(data.message || "Unknown Error");
+        });
       }
     })
     .then((data) => {
-      if (data.ok) {
+      if (data.success) {
         console.log(data);
-        messageContainer.innerHTML = "";
-        data.forEach((message) => {
-          messageElement.className = "show-message-area";
-          message.innerHTML = `
-          <div class = "show-message-content">
+
+        let messageElement = document.createElement("div");
+        messageElement.className = "show-message-area";
+        let messageContent = document.createElement("div");
+        messageContent.className = "show-message-content";
+        let messageForm = document.createElement("form");
+        messageForm.className = "leave-message";
+        messageForm.innerHTML = `
+          
             <span class="username-display" data-user-id="${message.message_id}">
             ${message.name}
             </span>：${message.content}
-            </div>
-          `;
-          if (message.message_id === YOUR_USER_ID_VARIABLE) {
-            formElement.setAttribute("method", "POST");
-            formElement.innerHTML = `
             <input type="hidden" name="message_id" value="${message.message_id}">
             <button type="submit" class="delete-message-btn">X</button>
-            `;
-            messageElement.appendChild(formElement);
-          }
-          messageContainer.appendChild(messageElement);
-        });
+            
+          `;
+
+        messageElement.appendChild(messageForm);
+        messageContainer.appendChild(messageElement);
+      } else {
+        messageContainer.innerText = "無留言顯示";
       }
     })
     .catch((error) => {

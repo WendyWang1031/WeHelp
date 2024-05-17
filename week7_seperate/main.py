@@ -231,8 +231,11 @@ async def login(request : Request):
         return response
 
 @app.post("/api/message" , response_class= JSONResponse)
-async def message_input_output( request : Request , message_content :  str = Form(default = "") ):
+async def message_input_output( request : Request):
     if "SIGNED-IN" in request.session and request.session["SIGNED-IN"]:
+        json_body = await request.json()
+        message_content = json_body.get("content")
+        
         user_id = request.session.get("id")
         if message_content:
             success =  insert_message(user_id , message_content)
